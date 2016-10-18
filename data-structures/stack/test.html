@@ -42,6 +42,13 @@
                 expect(s.pop()).to.be.equal(1);
                 expect(s.isEmpty()).to.be.equal(true);
             });
+            it('should remove all elements from the stack', function() {
+                var s = new Stack();
+                s.push(1);
+                s.push(2);
+                s.empty();
+                expect(s.isEmpty()).to.be.equal(true);
+            });
             it('should throw error if the stack is empty', function() {
                 var s = new Stack();
                 expect(function() {

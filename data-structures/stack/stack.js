@@ -68,6 +68,14 @@ Stack.prototype.peek = function() {
 };
 
 /**
+ * Removes all elements from the stack.
+ */
+Stack.prototype.empty = function() {
+    this._els.splice(0, this._els.length);
+    this._top = -1;
+};
+
+/**
  * Checks if the stack is empty - ie. contains no elements.
  * @return {Boolean}
  */
