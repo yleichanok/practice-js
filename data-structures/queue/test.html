@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Queue tests</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.1.2/mocha.min.css">
+</head>
+<body>
+
+    <div id="mocha"></div>
+    <div id="messages"></div>
+    <div id="fixtures"></div>
+    
+    <script src="https://cdn.rawgit.com/jquery/jquery/2.1.4/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/3.5.0/chai.js"></script>
+    <script src="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.js"></script>
+
+    <script src="./queue.js"></script>
+
+    <script>
+        mocha.setup('bdd');
+
+        var expect = chai.expect;
+
+        describe('Queue', function() {
+            it('should create an empty queue', function() {
+                var q = new Queue();
+                expect(q.isEmpty()).to.be.equal(true);
+            });
+            it('should add element to the queue', function() {
+                var q = new Queue();
+                q.enqueue(1);
+                expect(q.isEmpty()).to.be.equal(false);
+                expect(q.peek()).to.be.equal(1);
+            });
+            it('should remove element from queue', function() {
+                var q = new Queue();
+                q.enqueue(1);
+                q.enqueue(2);
+                expect(q.dequeue()).to.be.equal(1);
+                expect(q.isEmpty()).to.be.equal(false);
+                expect(q.dequeue()).to.be.equal(2);
+                expect(q.isEmpty()).to.be.equal(true);
+            });
+            it('should throw an error if the queue is empty', function() {
+                var q = new Queue();
+                expect(function() {
+                    q.dequeue();
+                }).to.throw(Error);
+            });
+            it('should return null if the queue is empty', function() {
+                var q = new Queue();
+                expect(q.peek()).to.be.equal(null);
+            });
+            it('should throw an error if the queue is full', function() {
+                var q = new Queue(3);
+                q.enqueue(1);
+                q.enqueue(2);
+                q.enqueue(3);
+                expect(function() {
+                    q.enqueue(4);
+                }).to.throw(Error);
+                expect(q.isFull()).to.be.equal(true);
+            });
+        });
+
+        mocha.run();
+    </script>
+</body>
+</html>
