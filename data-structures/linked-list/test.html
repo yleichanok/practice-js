@@ -17,6 +17,7 @@
 
     <script src="./node.js"></script>
     <script src="./singly.js"></script>
+    <script src="./doubly.js"></script>
 
     <script>
         mocha.setup('bdd');
@@ -71,6 +72,63 @@
 
                 list.remove(list.head.next);
                 expect(list.head.next.data).to.be.equal(3);
+            });
+        });
+
+        describe('DoublyLinkedList', function() {
+            it('should initialize an empty list', function() {
+                var list = new DoublyLinkedList();
+                expect(list.isEmpty()).to.be.equal(true);
+                expect(list.head).to.be.equal(null);
+            });
+            it('should append new element to the list', function() {
+                var list = new DoublyLinkedList();
+                list.append(1);
+                expect(list.head.data).to.be.equal(1);
+                expect(list.head.next).to.be.equal(null);
+                expect(list.isEmpty()).to.be.equal(false);
+                list.append(2);
+                expect(list.head.next.data).to.be.equal(2);
+                expect(list.head.next.prev.data).to.be.equal(1);
+            });
+            it('should prepend new element to the list', function() {
+                var list = new DoublyLinkedList();
+                list.prepend(1);
+                list.prepend(2);
+                expect(list.head.data).to.be.equal(2);
+                expect(list.head.next.data).to.be.equal(1);
+                expect(list.head.next.prev.data).to.be.equal(2);
+                expect(list.head.next.next).to.be.equal(null);
+                expect(list.head.prev).to.be.equal(null);
+            });
+            it('should reverse elements order in the list', function() {
+                var list = new DoublyLinkedList();
+                list.append(1);
+                list.append(2);
+                list.append(3);
+                list.reverse();
+                expect(list.head.data).to.be.equal(3);
+                expect(list.head.next.data).to.be.equal(2);
+                expect(list.head.next.next.prev.data).to.be.equal(2);
+                expect(list.head.next.next.next).to.be.equal(null);
+                expect(list.head.prev).to.be.equal(null);
+            });
+            it('should remove all elements from the list', function() {
+                var list = new DoublyLinkedList();
+                list.append(1);
+                list.empty();
+                expect(list.head).to.be.equal(null);
+                expect(list.isEmpty()).to.be.equal(true);
+            });
+            it('should remove element from the list', function() {
+                var list = new DoublyLinkedList();
+                list.append(1);
+                list.append(2);
+                list.append(3);
+
+                list.remove(list.head.next);
+                expect(list.head.next.data).to.be.equal(3);
+                expect(list.head.next.prev.data).to.be.equal(1);
             });
         });
 

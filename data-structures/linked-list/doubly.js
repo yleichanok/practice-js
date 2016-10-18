@@ -1,9 +1,9 @@
 /**
  * Singly linked list implementation.
- * Each node in the list has a reference to the next node.
- * @see https://en.wikipedia.org/wiki/Linked_list#Singly_linked_list
+ * Each node in the list has references to the next and the previous nodes.
+ * @see https://en.wikipedia.org/wiki/Linked_list#Doubly_linked_list
  */
-function SinglyLinkedList() {
+function DoublyLinkedList() {
 
     /**
      * Pointer to the first element of the list.
@@ -23,7 +23,7 @@ function SinglyLinkedList() {
  * Checks if there are any elements in the list.
  * @return {Boolean}
  */
-SinglyLinkedList.prototype.isEmpty = function() {
+DoublyLinkedList.prototype.isEmpty = function() {
     return this.head === null;
 };
 
@@ -31,18 +31,19 @@ SinglyLinkedList.prototype.isEmpty = function() {
  * Adds new node to the end of the list.
  * @param  {any} data New element
  */
-SinglyLinkedList.prototype.append = function(data) {
+DoublyLinkedList.prototype.append = function(data) {
 
-    var node = new Node(data);
+    var lastNode = this.head;
+    while (lastNode && lastNode.next) {
+        lastNode = lastNode.next;
+    }
+
+    var node = new Node(data, null, lastNode);
     this._els.push(node);
 
     if (!this.head) {
         this.head = node;
     } else {
-        var lastNode = this.head;
-        while (lastNode.next) {
-            lastNode = lastNode.next;
-        }
         lastNode.next = node;
     }
 };
@@ -52,17 +53,21 @@ SinglyLinkedList.prototype.append = function(data) {
  * Sets head of the list to the added node.
  * @param  {any} data New element
  */
-SinglyLinkedList.prototype.prepend = function(data) {
+DoublyLinkedList.prototype.prepend = function(data) {
 
     var node = new Node(data, this.head);
     this._els.push(node);
+
+    if (this.head) {
+        this.head.prev = node;
+    }
     this.head = node;
 };
 
 /**
  * Reverses the order of the list elements.
  */
-SinglyLinkedList.prototype.reverse = function() {
+DoublyLinkedList.prototype.reverse = function() {
 
     if (!this.head) {
         return;
@@ -74,7 +79,11 @@ SinglyLinkedList.prototype.reverse = function() {
 
     while (curNode !== null) {
         nextNode = curNode.next;
+        prevNode = curNode.prev;
+
         curNode.next = prevNode;
+        curNode.prev = nextNode;
+
         prevNode = curNode;
         curNode = nextNode;
     }
@@ -86,7 +95,7 @@ SinglyLinkedList.prototype.reverse = function() {
  * Removes one node from the list; updates links.
  * @param  {Node} node Node to remove
  */
-SinglyLinkedList.prototype.remove = function(node) {
+DoublyLinkedList.prototype.remove = function(node) {
 
     var prevNode = null,
         curNode = this.head;
@@ -96,8 +105,9 @@ SinglyLinkedList.prototype.remove = function(node) {
         curNode = curNode.next;
     }
 
-    // update reference to the next node
+    // update reference to the next and previous nodes
     prevNode.next = node.next;
+    prevNode.next.prev = prevNode;
 
     // remove node from the storage
     for (var i = 0; i < this._els.length; i++) {
@@ -111,7 +121,7 @@ SinglyLinkedList.prototype.remove = function(node) {
 /**
  * Removes all elements from the list.
  */
-SinglyLinkedList.prototype.empty = function() {
+DoublyLinkedList.prototype.empty = function() {
     this._els.splice(0, this._els.length);
     this.head = null;
 };
