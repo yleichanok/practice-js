@@ -33,13 +33,20 @@
                 expect(q.isEmpty()).to.be.equal(false);
                 expect(q.peek()).to.be.equal(1);
             });
-            it('should remove element from queue', function() {
+            it('should remove element from the queue', function() {
                 var q = new Queue();
                 q.enqueue(1);
                 q.enqueue(2);
                 expect(q.dequeue()).to.be.equal(1);
                 expect(q.isEmpty()).to.be.equal(false);
                 expect(q.dequeue()).to.be.equal(2);
+                expect(q.isEmpty()).to.be.equal(true);
+            });
+            it('should remove all elements from the queue', function() {
+                var q = new Queue();
+                q.enqueue(1);
+                q.enqueue(2);
+                q.empty();
                 expect(q.isEmpty()).to.be.equal(true);
             });
             it('should throw an error if the queue is empty', function() {

@@ -69,6 +69,14 @@ Queue.prototype.peek = function() {
 };
 
 /**
+ * Removes all elements from the queue.
+ */
+Queue.prototype.empty = function() {
+    this._els.splice(0, this._els.length);
+    this._last = -1;
+};
+
+/**
  * Checks if the queue does not contain any elements.
  * @return {Boolean}
  */
