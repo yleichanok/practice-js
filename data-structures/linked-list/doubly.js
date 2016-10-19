@@ -1,9 +1,10 @@
 /**
  * Singly linked list implementation.
  * Each node in the list has references to the next and the previous nodes.
+ * @param {Boolean} circular Indicates if the list is circular (optional)
  * @see https://en.wikipedia.org/wiki/Linked_list#Doubly_linked_list
  */
-function DoublyLinkedList() {
+function DoublyLinkedList(circular) {
 
     /**
      * Pointer to the first element of the list.
@@ -17,7 +18,32 @@ function DoublyLinkedList() {
      * @type {Array}
      */
     this._els = [];
+
+    /**
+     * Indicates if the list is circular.
+     * Doubly linked list is circular if:
+     * the prev pointer of the first element is linked to the last element of the list;
+     * the next pointer of the last element is linked to the first element of the list.
+     * @type {Boolean}
+     */
+    this._circular = circular;
 }
+
+/**
+ * Returns the last element of the list.
+ * @private
+ * @return {any}
+ */
+DoublyLinkedList.prototype._last = function() {
+
+    var lastNode = this.head;
+    
+    for (var i = 1, l = this.size(); i < l; i++) {
+        lastNode = lastNode.next;
+    }
+
+    return lastNode;
+};
 
 /**
  * Checks if there are any elements in the list.
@@ -33,11 +59,16 @@ DoublyLinkedList.prototype.isEmpty = function() {
  */
 DoublyLinkedList.prototype.size = function() {
     var size = 0,
-        cur = this.head;
+        lastNode = this.head;
 
-    while (cur !== null) {
+    while (lastNode) {
         size++;
-        cur = cur.next;
+
+        if (this._circular && lastNode && lastNode.next === this.head) {
+            break;
+        }
+
+        lastNode = lastNode.next;
     }
 
     return size;
@@ -49,18 +80,20 @@ DoublyLinkedList.prototype.size = function() {
  */
 DoublyLinkedList.prototype.append = function(data) {
 
-    var lastNode = this.head;
-    while (lastNode && lastNode.next) {
-        lastNode = lastNode.next;
-    }
+    var next = this._circular ? this.head : null,
+        prev = this._last(),
+        node = new Node(data, next, prev);
 
-    var node = new Node(data, null, lastNode);
     this._els.push(node);
 
     if (!this.head) {
         this.head = node;
     } else {
-        lastNode.next = node;
+        this._last().next = node;
+
+        if (this._circular) {
+            this.head.prev = node;
+        }
     }
 };
 
@@ -71,7 +104,9 @@ DoublyLinkedList.prototype.append = function(data) {
  */
 DoublyLinkedList.prototype.prepend = function(data) {
 
-    var node = new Node(data, this.head);
+    var last = this._last(),
+        prev = this._circular ? this._last() : null,
+        node = new Node(data, this.head, prev);
     this._els.push(node);
 
     if (this.head) {
@@ -93,7 +128,7 @@ DoublyLinkedList.prototype.reverse = function() {
         nextNode = null,
         prevNode = null;
 
-    while (curNode !== null) {
+    for (var i = 0, l = this.size(); i < l; i++) {
         nextNode = curNode.next;
         prevNode = curNode.prev;
 
@@ -110,23 +145,41 @@ DoublyLinkedList.prototype.reverse = function() {
 /**
  * Removes one node from the list; updates links.
  * @param  {Node} node Node to remove
+ * @throws {Error} If node is not in the list
  */
 DoublyLinkedList.prototype.remove = function(node) {
 
-    var prevNode = null,
+    if (!this.head) {
+        throw new Error('Node not found.');
+    }
+
+    var prevNode = this._circular ? this._last() : null,
         curNode = this.head;
 
-    while (curNode !== node) {
+    for (var i = 0, l = this.size(); i < l; i++) {
+        if (curNode === node) {
+            break;
+        }
+
+        if (!curNode || (this._circular && curNode.next === this.head)) {
+            throw new Error('Node not found.');
+        }
+
         prevNode = curNode;
         curNode = curNode.next;
     }
 
-    // update reference to the next and previous nodes
+    // update reference to the next and prev node
     prevNode.next = node.next;
-    prevNode.next.prev = prevNode;
+    node.next.prev = prevNode;
 
+    // update head if it was removed
+    if (node === this.head) {
+        this.head = node.next;
+    }
+ 
     // remove node from the storage
-    for (var i = 0; i < this._els.length; i++) {
+    for (var i = 0, l = this.size(); i < l; i++) {
         if (this._els[i] === node) {
             this._els.splice(i, 1);
             break;

@@ -39,6 +39,17 @@
                 list.append(2);
                 expect(list.head.next.data).to.be.equal(2);
             });
+            it('should append new element to the list', function() {
+                var list = new SinglyLinkedList(true);
+                list.append(1);
+                expect(list.head.data).to.be.equal(1);
+                expect(list.head.next).to.be.equal(null);
+                expect(list.size()).to.be.equal(1);
+                list.append(2);
+                expect(list.head.next.data).to.be.equal(2);
+                expect(list.head.next.next.data).to.be.equal(1);
+                expect(list.size()).to.be.equal(2);
+            });
             it('should prepend new element to the list', function() {
                 var list = new SinglyLinkedList();
                 list.prepend(1);
@@ -71,9 +82,19 @@
                 list.append(1);
                 list.append(2);
                 list.append(3);
-
                 list.remove(list.head.next);
                 expect(list.head.next.data).to.be.equal(3);
+            });
+            it('should remove element from the list', function() {
+                var list = new SinglyLinkedList(true);
+                list.append(1);
+                list.append(2);
+                list.append(3);
+                list.remove(list.head);
+                expect(list.head.data).to.be.equal(2);
+                expect(list.head.next.next.data).to.be.equal(2);
+                list.remove(list.head.next);
+                expect(list.head.data).to.be.equal(2);
             });
         });
 
@@ -92,6 +113,19 @@
                 list.append(2);
                 expect(list.head.next.data).to.be.equal(2);
                 expect(list.head.next.prev.data).to.be.equal(1);
+            });
+            it('should append new element to the list', function() {
+                var list = new DoublyLinkedList(true);
+                list.append(1);
+                expect(list.head.data).to.be.equal(1);
+                expect(list.head.next).to.be.equal(null);
+                expect(list.head.prev).to.be.equal(null);
+                expect(list.size()).to.be.equal(1);
+                list.append(2);
+                expect(list.head.prev.data).to.be.equal(2);
+                expect(list.head.next.data).to.be.equal(2);
+                expect(list.head.next.next.data).to.be.equal(1);
+                expect(list.size()).to.be.equal(2);
             });
             it('should prepend new element to the list', function() {
                 var list = new DoublyLinkedList();
@@ -129,10 +163,19 @@
                 list.append(1);
                 list.append(2);
                 list.append(3);
-
                 list.remove(list.head.next);
                 expect(list.head.next.data).to.be.equal(3);
                 expect(list.head.next.prev.data).to.be.equal(1);
+            });
+            it('should remove element from the list', function() {
+                var list = new DoublyLinkedList(true);
+                list.append(1);
+                list.append(2);
+                list.append(3);
+                list.remove(list.head);
+                expect(list.head.data).to.be.equal(2);
+                expect(list.head.prev.data).to.be.equal(3);
+                expect(list.head.next.next.data).to.be.equal(2);
             });
         });
 
