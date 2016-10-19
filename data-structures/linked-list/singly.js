@@ -28,6 +28,22 @@ SinglyLinkedList.prototype.isEmpty = function() {
 };
 
 /**
+ * Returns number of elements in the list.
+ * @return {Number}
+ */
+SinglyLinkedList.prototype.size = function() {
+    var size = 0,
+        cur = this.head;
+
+    while (cur !== null) {
+        size++;
+        cur = cur.next;
+    }
+
+    return size;
+};
+
+/**
  * Adds new node to the end of the list.
  * @param  {any} data New element
  */

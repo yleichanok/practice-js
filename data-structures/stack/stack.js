@@ -68,6 +68,14 @@ Stack.prototype.peek = function() {
 };
 
 /**
+ * Returns number of elements in the stack.
+ * @return {Number}
+ */
+Stack.prototype.size = function() {
+    return this._els.length;
+};
+
+/**
  * Removes all elements from the stack.
  */
 Stack.prototype.empty = function() {

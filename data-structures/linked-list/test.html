@@ -60,9 +60,11 @@
             it('should remove all elements from the list', function() {
                 var list = new SinglyLinkedList();
                 list.append(1);
+                expect(list.size()).to.be.equal(1);
                 list.empty();
                 expect(list.head).to.be.equal(null);
                 expect(list.isEmpty()).to.be.equal(true);
+                expect(list.size()).to.be.equal(0);
             });
             it('should remove element from the list', function() {
                 var list = new SinglyLinkedList();
@@ -116,9 +118,11 @@
             it('should remove all elements from the list', function() {
                 var list = new DoublyLinkedList();
                 list.append(1);
+                expect(list.size()).to.be.equal(1);
                 list.empty();
                 expect(list.head).to.be.equal(null);
                 expect(list.isEmpty()).to.be.equal(true);
+                expect(list.size()).to.be.equal(0);
             });
             it('should remove element from the list', function() {
                 var list = new DoublyLinkedList();

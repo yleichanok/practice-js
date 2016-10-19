@@ -46,8 +46,10 @@
                 var q = new Queue();
                 q.enqueue(1);
                 q.enqueue(2);
+                expect(q.size()).to.be.equal(2);
                 q.empty();
                 expect(q.isEmpty()).to.be.equal(true);
+                expect(q.size()).to.be.equal(0);
             });
             it('should throw an error if the queue is empty', function() {
                 var q = new Queue();

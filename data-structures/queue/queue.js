@@ -69,6 +69,14 @@ Queue.prototype.peek = function() {
 };
 
 /**
+ * Returns number of elements in the queue.
+ * @return {Number}
+ */
+Queue.prototype.size = function() {
+    return this._els.length;
+};
+
+/**
  * Removes all elements from the queue.
  */
 Queue.prototype.empty = function() {
