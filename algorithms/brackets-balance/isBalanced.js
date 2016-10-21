@@ -11,7 +11,7 @@
  */
 function isBalanced(text) {
 
-    if (!text && text !== '') {
+    if (typeof text !== 'string') {
         throw new Error('Text is missing.');
     }
 
