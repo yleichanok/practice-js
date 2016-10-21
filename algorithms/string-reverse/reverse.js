@@ -17,9 +17,8 @@ function reverse(text) {
         reversed = new Array(len);
 
     for (var i = 0, l = len / 2; i < l; i++) {
-        var tmp = text[i];
         reversed[i] = text[len - 1 - i];
-        reversed[len - 1 - i] = tmp;
+        reversed[len - 1 - i] = text[i];
     }
     
     return reversed.join('');
