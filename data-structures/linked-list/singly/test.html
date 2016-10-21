@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Singly linked list tests</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.1.2/mocha.min.css">
+</head>
+<body>
+
+    <div id="mocha"></div>
+    <div id="messages"></div>
+    <div id="fixtures"></div>
+    
+    <script src="https://cdn.rawgit.com/jquery/jquery/2.1.4/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/3.5.0/chai.js"></script>
+    <script src="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.js"></script>
+
+    <script src="./node.js"></script>
+    <script src="./list.js"></script>
+
+    <script>
+        mocha.setup('bdd');
+
+        var expect = chai.expect;
+
+        describe('List', function() {
+            it('should initialize an empty list', function() {
+                var list = new List();
+                expect(list.isEmpty()).to.be.equal(true);
+                expect(list.first()).to.be.equal(null);
+            });
+            it('should append new element to the list', function() {
+                var list = new List();
+                list.append(1);
+                expect(list.first().data).to.be.equal(1);
+                expect(list.first().next).to.be.equal(null);
+                expect(list.isEmpty()).to.be.equal(false);
+                list.append(2);
+                expect(list.first().next.data).to.be.equal(2);
+            });
+            it('should append new element to the list', function() {
+                var list = new List(true);
+                list.append(1);
+                expect(list.first().data).to.be.equal(1);
+                expect(list.first().next).to.be.equal(null);
+                expect(list.size()).to.be.equal(1);
+                list.append(2);
+                expect(list.first().next.data).to.be.equal(2);
+                expect(list.first().next.next.data).to.be.equal(1);
+                expect(list.size()).to.be.equal(2);
+            });
+            it('should prepend new element to the list', function() {
+                var list = new List();
+                list.prepend(1);
+                list.prepend(2);
+                expect(list.first().data).to.be.equal(2);
+                expect(list.first().next.data).to.be.equal(1);
+                expect(list.first().next.next).to.be.equal(null);
+            });
+            it('should reverse elements order in the list', function() {
+                var list = new List();
+                list.append(1);
+                list.append(2);
+                list.append(3);
+                list.reverse();
+                expect(list.first().data).to.be.equal(3);
+                expect(list.first().next.data).to.be.equal(2);
+                expect(list.first().next.next.next).to.be.equal(null);
+            });
+            it('should remove all elements from the list', function() {
+                var list = new List();
+                list.append(1);
+                expect(list.size()).to.be.equal(1);
+                list.empty();
+                expect(list.first()).to.be.equal(null);
+                expect(list.isEmpty()).to.be.equal(true);
+                expect(list.size()).to.be.equal(0);
+            });
+            it('should remove element from the list', function() {
+                var list = new List();
+                list.append(1);
+                list.append(2);
+                list.append(3);
+                list.remove(list.first().next);
+                expect(list.first().next.data).to.be.equal(3);
+            });
+            it('should remove element from the list', function() {
+                var list = new List(true);
+                list.append(1);
+                list.append(2);
+                list.append(3);
+                list.remove(list.first());
+                expect(list.first().data).to.be.equal(2);
+                expect(list.first().next.next.data).to.be.equal(2);
+                list.remove(list.first().next);
+                expect(list.first().data).to.be.equal(2);
+            });
+        });
+
+        mocha.run();
+    </script>
+</body>
+</html>

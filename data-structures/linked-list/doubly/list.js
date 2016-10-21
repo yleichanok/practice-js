@@ -4,20 +4,13 @@
  * @param {Boolean} circular Indicates if the list is circular (optional)
  * @see https://en.wikipedia.org/wiki/Linked_list#Doubly_linked_list
  */
-function DoublyLinkedList(circular) {
+function List(circular) {
 
     /**
      * Pointer to the first element of the list.
      * @type {Node}
      */
-    this.head = null;
-
-    /**
-     * Storage for list elements.
-     * @private
-     * @type {Array}
-     */
-    this._els = [];
+    this._head = null;
 
     /**
      * Indicates if the list is circular.
@@ -30,13 +23,40 @@ function DoublyLinkedList(circular) {
 }
 
 /**
+ * Checks if there are any elements in the list.
+ * @return {Boolean}
+ */
+List.prototype.isEmpty = function() {
+
+    return this._head === null;
+};
+
+/**
+ * Returns true if the last node of the list points to the head.
+ * @return {Boolean}
+ */
+List.prototype.isCircular = function() {
+
+    return this._circular;
+};
+
+/**
+ * Returns the head of the list.
+ * @return {Node}
+ */
+List.prototype.first = function() {
+
+    return this._head;
+};
+
+/**
  * Returns the last element of the list.
  * @private
  * @return {any}
  */
-DoublyLinkedList.prototype._last = function() {
+List.prototype.last = function() {
 
-    var lastNode = this.head;
+    var lastNode = this._head;
     
     for (var i = 1, l = this.size(); i < l; i++) {
         lastNode = lastNode.next;
@@ -46,25 +66,18 @@ DoublyLinkedList.prototype._last = function() {
 };
 
 /**
- * Checks if there are any elements in the list.
- * @return {Boolean}
- */
-DoublyLinkedList.prototype.isEmpty = function() {
-    return this.head === null;
-};
-
-/**
  * Returns number of elements in the list.
  * @return {Number}
  */
-DoublyLinkedList.prototype.size = function() {
+List.prototype.size = function() {
+
     var size = 0,
-        lastNode = this.head;
+        lastNode = this._head;
 
     while (lastNode) {
         size++;
 
-        if (this._circular && lastNode && lastNode.next === this.head) {
+        if (this._circular && lastNode && lastNode.next === this._head) {
             break;
         }
 
@@ -78,21 +91,20 @@ DoublyLinkedList.prototype.size = function() {
  * Adds new node to the end of the list.
  * @param  {any} data New element
  */
-DoublyLinkedList.prototype.append = function(data) {
+List.prototype.append = function(data) {
 
-    var next = this._circular ? this.head : null,
-        prev = this._last(),
-        node = new Node(data, next, prev);
+    var nextNode = this._circular ? this._head : null,
+        prevNode = this.last(),
+        node = new Node(data, nextNode, prevNode);
 
-    this._els.push(node);
-
-    if (!this.head) {
-        this.head = node;
+    if (!this._head) {
+        this._head = node;
     } else {
-        this._last().next = node;
+        var lastNode = this.last();
+        lastNode.next = node;
 
         if (this._circular) {
-            this.head.prev = node;
+            this._head.prev = node;
         }
     }
 };
@@ -102,29 +114,28 @@ DoublyLinkedList.prototype.append = function(data) {
  * Sets head of the list to the added node.
  * @param  {any} data New element
  */
-DoublyLinkedList.prototype.prepend = function(data) {
+List.prototype.prepend = function(data) {
 
-    var last = this._last(),
-        prev = this._circular ? this._last() : null,
-        node = new Node(data, this.head, prev);
-    this._els.push(node);
+    var last = this.last(),
+        prev = this._circular ? this.last() : null,
+        node = new Node(data, this._head, prev);
 
-    if (this.head) {
-        this.head.prev = node;
+    if (this._head) {
+        this._head.prev = node;
     }
-    this.head = node;
+    this._head = node;
 };
 
 /**
  * Reverses the order of the list elements.
  */
-DoublyLinkedList.prototype.reverse = function() {
+List.prototype.reverse = function() {
 
-    if (!this.head) {
+    if (!this._head) {
         return;
     }
 
-    var curNode = this.head,
+    var curNode = this._head,
         nextNode = null,
         prevNode = null;
 
@@ -139,7 +150,7 @@ DoublyLinkedList.prototype.reverse = function() {
         curNode = nextNode;
     }
 
-    this.head = prevNode;
+    this._head = prevNode;
 };
 
 /**
@@ -147,21 +158,21 @@ DoublyLinkedList.prototype.reverse = function() {
  * @param  {Node} node Node to remove
  * @throws {Error} If node is not in the list
  */
-DoublyLinkedList.prototype.remove = function(node) {
+List.prototype.remove = function(node) {
 
-    if (!this.head) {
+    if (!this._head) {
         throw new Error('Node not found.');
     }
 
-    var prevNode = this._circular ? this._last() : null,
-        curNode = this.head;
+    var prevNode = this._circular ? this.last() : null,
+        curNode = this._head;
 
     for (var i = 0, l = this.size(); i < l; i++) {
         if (curNode === node) {
             break;
         }
 
-        if (!curNode || (this._circular && curNode.next === this.head)) {
+        if (!curNode || (this._circular && curNode.next === this._head)) {
             throw new Error('Node not found.');
         }
 
@@ -174,23 +185,15 @@ DoublyLinkedList.prototype.remove = function(node) {
     node.next.prev = prevNode;
 
     // update head if it was removed
-    if (node === this.head) {
-        this.head = node.next;
-    }
- 
-    // remove node from the storage
-    for (var i = 0, l = this.size(); i < l; i++) {
-        if (this._els[i] === node) {
-            this._els.splice(i, 1);
-            break;
-        }
+    if (node === this._head) {
+        this._head = node.next;
     }
 };
 
 /**
- * Removes all elements from the list.
+ * Removes all elements from the list, resets the head.
  */
-DoublyLinkedList.prototype.empty = function() {
-    this._els.splice(0, this._els.length);
-    this.head = null;
+List.prototype.empty = function() {
+
+    this._head = null;
 };

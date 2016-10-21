@@ -4,20 +4,13 @@
  * @param {Boolean} circular Indicates if the list is circular (optional)
  * @see https://en.wikipedia.org/wiki/Linked_list#Singly_linked_list
  */
-function SinglyLinkedList(circular) {
+function List(circular) {
 
     /**
      * Pointer to the first element of the list.
      * @type {Node}
      */
-    this.head = null;
-
-    /**
-     * Storage for list elements.
-     * @private
-     * @type {Array}
-     */
-    this._els = [];
+    this._head = null;
 
     /**
      * Indicates if the list is circular.
@@ -25,18 +18,44 @@ function SinglyLinkedList(circular) {
      * is linked to the first element of the list.
      * @type {Boolean}
      */
-    this._circular = circular;
+    this._circular = circular || false;
 }
 
 /**
- * Returns the last element of the list.
- * @private
+ * Checks if there are any elements in the list.
+ * @return {Boolean}
+ */
+List.prototype.isEmpty = function() {
+
+    return this._head === null;
+};
+
+/**
+ * Returns true if the last node of the list points to the head.
+ * @return {Boolean}
+ */
+List.prototype.isCircular = function() {
+
+    return this._circular;
+};
+
+/**
+ * Returns the first node of the list (aka head).
  * @return {Node}
  */
-SinglyLinkedList.prototype._last = function() {
+List.prototype.first = function() {
 
-    var lastNode = this.head;
-    
+    return this._head;
+};
+
+/**
+ * Returns the last element of the list.
+ * @return {Node}
+ */
+List.prototype.last = function() {
+
+    var lastNode = this._head;
+
     for (var i = 1, l = this.size(); i < l; i++) {
         lastNode = lastNode.next;
     }
@@ -45,50 +64,40 @@ SinglyLinkedList.prototype._last = function() {
 };
 
 /**
- * Checks if there are any elements in the list.
- * @return {Boolean}
- */
-SinglyLinkedList.prototype.isEmpty = function() {
-    return this.head === null;
-};
-
-/**
  * Returns number of elements in the list.
  * @return {Number}
  */
-SinglyLinkedList.prototype.size = function() {
+List.prototype.size = function() {
 
     var size = 0,
-        lastNode = this.head;
+        lastNode = this._head;
 
     while (lastNode) {
         size++;
 
-        if (this._circular && lastNode && lastNode.next === this.head) {
+        if (this._circular && lastNode && lastNode.next === this._head) {
             break;
         }
 
         lastNode = lastNode.next;
     }
-
     return size;
+
 };
 
 /**
  * Adds new node to the end of the list.
  * @param  {any} data New element
  */
-SinglyLinkedList.prototype.append = function(data) {
+List.prototype.append = function(data) {
 
-    var next = this._circular ? this.head : null,
-        node = new Node(data, next);
+    var nextNode = this._circular ? this._head : null,
+        node = new Node(data, nextNode);
 
-    this._els.push(node);
-
-    if (!this.head) {
-        this.head = node;
+    if (!this._head) {
+        this._head = node;
     } else {
-        var lastNode = this._last();
+        var lastNode = this.last(); 
         lastNode.next = node;
     }
 };
@@ -98,27 +107,30 @@ SinglyLinkedList.prototype.append = function(data) {
  * Sets head of the list to the added node.
  * @param  {any} data New element
  */
-SinglyLinkedList.prototype.prepend = function(data) {
+List.prototype.prepend = function(data) {
 
-    var lastNode = this._last(),
-        node = new Node(data, this.head, lastNode);
+    var node = new Node(data, this._head);
 
-    this._els.push(node);
-    this.head = node;
+    if (this._circular) {
+        var lastNode = this.last();
+        lastNode.next = node;
+    }
+
+    this._head = node;
 };
 
 /**
  * Reverses the order of the list elements.
  */
-SinglyLinkedList.prototype.reverse = function() {
+List.prototype.reverse = function() {
 
-    if (!this.head) {
+    if (!this._head) {
         return;
     }
 
-    var curNode = this.head,
+    var curNode = this._head,
         nextNode = null,
-        prevNode = this._circular ? this._last() : null;
+        prevNode = this._circular ? this.last() : null;
 
     for (var i = 0, l = this.size(); i < l; i++) {
         nextNode = curNode.next;
@@ -127,7 +139,7 @@ SinglyLinkedList.prototype.reverse = function() {
         curNode = nextNode;
     }
 
-    this.head = prevNode;
+    this._head = prevNode;
 };
 
 /**
@@ -135,21 +147,21 @@ SinglyLinkedList.prototype.reverse = function() {
  * @param  {Node} node Node to remove
  * @throws {Error} If the node is not found in the list
  */
-SinglyLinkedList.prototype.remove = function(node) {
+List.prototype.remove = function(node) {
 
-    if (!this.head) {
+    if (!this._head) {
         throw new Error('Node not found.');
     }
 
-    var prevNode = this._circular ? this._last() : null,
-        curNode = this.head;
+    var prevNode = this._circular ? this.last() : null,
+        curNode = this._head;
 
     for (var i = 0, l = this.size(); i < l; i++) {
         if (curNode === node) {
             break;
         }
 
-        if (!curNode || curNode.next === this.head) {
+        if (!curNode || curNode.next === this._head) {
             throw new Error('Node not found.');
         }
 
@@ -161,23 +173,15 @@ SinglyLinkedList.prototype.remove = function(node) {
     prevNode.next = node.next;
 
     // update head if it was removed
-    if (node === this.head) {
-        this.head = node.next;
-    }
-
-    // remove node from the storage
-    for (var i = 0, l = this.size(); i < l; i++) {
-        if (this._els[i] === node) {
-            this._els.splice(i, 1);
-            break;
-        }
+    if (node === this._head) {
+        this._head = node.next;
     }
 };
 
 /**
- * Removes all elements from the list.
+ * Removes all elements from the list, resets the list head.
  */
-SinglyLinkedList.prototype.empty = function() {
-    this._els.splice(0, this._els.length);
-    this.head = null;
+List.prototype.empty = function() {
+
+    this._head = null;
 };
