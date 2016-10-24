@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Binary tree (linked list representation) tests</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.1.2/mocha.min.css">
+</head>
+<body>
+
+    <div id="mocha"></div>
+    <div id="messages"></div>
+    <div id="fixtures"></div>
+    
+    <script src="https://cdn.rawgit.com/jquery/jquery/2.1.4/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/3.5.0/chai.js"></script>
+    <script src="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.js"></script>
+
+    <script src="./node.js"></script>
+    <script src="./tree.js"></script>
+
+    <script>
+        mocha.setup('bdd');
+
+        var expect = chai.expect;
+
+        describe('Tree', function() {
+            it('should create a tree with a root', function() {
+                var tree = new Tree(1);
+                expect(tree.root.data).to.be.equal(1);
+                expect(tree.root.getLeft()).to.be.equal(null);
+                expect(tree.root.getRight()).to.be.equal(null);
+            });
+            it('should create a tree with children', function() {
+                var tree = new Tree(1);
+                tree.root.setLeft(2);
+                tree.root.getLeft().setLeft(4);
+                tree.root.getLeft().setRight(5);
+                tree.root.setRight(3);
+                expect(tree.root.getLeft().data).to.be.equal(2);
+                expect(tree.root.getRight().data).to.be.equal(3);
+                expect(tree.root.getLeft().getLeft().data).to.be.equal(4);
+            });
+            it('should run correct DFS Preorder traversal', function() {
+                var tree = new Tree(1);
+                tree.root.setLeft(2).setLeft(4).getParent().setRight(5);
+                tree.root.setRight(3).setLeft(6).getParent().setRight(7);
+                expect(tree.dfsPreorder(tree.root).join(' ')).to.be.equal('1 2 4 5 3 6 7');
+            });
+            it('should run correct DFS Preorder traversal', function() {
+                var tree = new Tree(1);
+                tree.root.setRight(3).setRight(7);
+                expect(tree.dfsPreorder(tree.root).join(' ')).to.be.equal('1 3 7');
+            });
+        });
+
+        mocha.run();
+    </script>
+</body>
+</html>
