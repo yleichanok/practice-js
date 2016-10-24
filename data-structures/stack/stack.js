@@ -99,3 +99,11 @@ Stack.prototype.isEmpty = function() {
 Stack.prototype.isFull = function() {
     return this._maxSize && this._top >= this._maxSize - 1;
 };
+
+/**
+ * Returns elements of the stack as an array.
+ * @return {Array}
+ */
+Stack.prototype.toArray = function() {
+    return this._els;
+};
