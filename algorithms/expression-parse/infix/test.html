@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Postfix notation tests</title>
+    <title>Infix notation tests</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.1.2/mocha.min.css">
 </head>
 <body>
@@ -16,47 +16,38 @@
     <script src="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.js"></script>
 
     <script src="../../../data-structures/stack/stack.js"></script>
-    <script src="./evaluate.js"></script>
+    <script src="../../../data-structures/queue/queue.js"></script>
+    <script src="../../brackets-balance/isBalanced.js"></script>
+    <script src="./parse.js"></script>
 
     <script>
         mocha.setup('bdd');
 
         var expect = chai.expect;
 
-        describe('evaluate', function() {
+        describe('parse', function() {
             it('should throw an error', function() {
                 expect(function() {
-                    evaluate();
+                    parse();
                 }).to.throw(Error);
                 expect(function() {
-                    evaluate('test');
-                }).to.throw(Error);
-                expect(function() {
-                    evaluate(' 1 2 3 4 5 -');
-                }).to.throw(Error);
-                expect(function() {
-                    evaluate('- 3 + 4');
+                    parse('test');
                 }).to.throw(Error);
             });
             it('should return correct result', function() {
-                // (1+2)*3-2
-                expect(evaluate('1 2 + 3 * 2 -')).to.be.equal(7);
+                expect(parse('( 1 + 2 ) * 3 - 2')).to.be.equal('1 2 + 3 * 2 -');
             });
             it('should return correct result', function() {
-                // (1+2)*3-3/(-3)
-                expect(evaluate('1 2 + 3 * 3 -3 / -')).to.be.equal(10);
+                expect(parse('( 1 + 2 ) * 3 - 3 / ( -3 )')).to.be.equal('1 2 + 3 * 3 -3 / -');
             });
             it('should return correct result', function() {
-                // 5+((1+2)*4)−3
-                expect(evaluate('5 1 2 + 4 * + 3 -')).to.be.equal(14);
+                expect(parse('5 + ( ( 1 + 2 ) * 4 ) - 3')).to.be.equal('5 1 2 + 4 * + 3 -');
             });
             it('should return correct result', function() {
-                // 10-13*(1+0)
-                expect(evaluate('10 13 1 0 + * -')).to.be.equal(-3);
+                expect(parse('10 - 13 * ( 1 + 0 )')).to.be.equal('10 13 1 0 + * -');
             });
             it('should return correct result', function() {
-                // 0.3+0.5-0.4
-                expect(evaluate('0.3 0.5 + 0.4 -')).to.be.equal(0.4);
+                expect(parse('0.3 + 0.5 - 0.4')).to.be.equal('0.3 0.5 + 0.4 -');
             });
         });
 
