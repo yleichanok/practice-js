@@ -46,3 +46,21 @@ function fibonacci2(n) {
 
     return res;
 }
+
+/**
+ * Finds nth Fibonacci number using a Binet's formula.
+ * @see http://www.maths.surrey.ac.uk/hosted-sites/R.Knott/Fibonacci/fibFormula.html
+ * 
+ * @param  {Number} n Target number
+ * @return {Number}
+ */
+function fibonacci3(n) {
+
+    if (typeof n !== 'number' || n < 0) {
+        throw new Error('Invalid input.');
+    }
+
+    var fi = (Math.sqrt(5) + 1) / 2;
+
+    return Math.round((Math.pow(fi, n) - (Math.pow(-fi, -n))) / Math.sqrt(5));
+}

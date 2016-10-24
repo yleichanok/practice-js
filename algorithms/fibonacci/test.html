@@ -41,7 +41,7 @@
                 expect(fibonacci1(5)).to.be.equal(5);
             });
             it('should produce correct result', function() {
-                expect(fibonacci1(7)).to.be.equal(13);
+                expect(fibonacci1(10)).to.be.equal(55);
             });
         });
 
@@ -64,7 +64,30 @@
                 expect(fibonacci2(5)).to.be.equal(5);
             });
             it('should produce correct result', function() {
-                expect(fibonacci2(7)).to.be.equal(13);
+                expect(fibonacci2(10)).to.be.equal(55);
+            });
+        });
+
+        describe('fibonacci3', function() {
+            it('should throw an error', function() {
+                expect(function() {
+                    fibonacci3(-1);
+                }).to.throw(Error);
+                expect(function() {
+                    fibonacci3();
+                }).to.throw(Error);
+            });
+            it('should produce correct result', function() {
+                expect(fibonacci3(0)).to.be.equal(0);
+            });
+            it('should produce correct result', function() {
+                expect(fibonacci3(1)).to.be.equal(1);
+            });
+            it('should produce correct result', function() {
+                expect(fibonacci3(5)).to.be.equal(5);
+            });
+            it('should produce correct result', function() {
+                expect(fibonacci3(10)).to.be.equal(55);
             });
         });
 
