@@ -100,3 +100,11 @@ Queue.prototype.isEmpty = function() {
 Queue.prototype.isFull = function() {
     return this._maxSize && this._last >= this._maxSize - 1;
 };
+
+/**
+ * Returns elements of the queue as an array in the same order.
+ * @return {Array}
+ */
+Queue.prototype.toArray = function() {
+    return this._els;
+};
