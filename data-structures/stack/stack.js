@@ -107,3 +107,29 @@ Stack.prototype.isFull = function() {
 Stack.prototype.toArray = function() {
     return this._els;
 };
+
+/**
+ * Generates visualization of the stack.
+ * @return {String}
+ */
+Stack.prototype.pretty = function() {
+    var s = [];
+
+    s.push('|          |\n');
+
+    for (var i = 0, l = this.size(); i < l; i++) {
+        s.push('|');
+
+        var el = '' + this._els[i];
+        while (el.length < 10) {
+            el = ' ' + el;
+        }
+
+        s.push(el);
+        s.push('|');
+        s.push('\n');
+    }
+
+    s.push('____________');
+    return s.join('');
+};
