@@ -130,6 +130,6 @@ Stack.prototype.pretty = function() {
         s.push('\n');
     }
 
-    s.push('____________');
+    s.push('------------');
     return s.join('');
 };
