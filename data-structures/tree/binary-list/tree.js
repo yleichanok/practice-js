@@ -31,3 +31,21 @@ Tree.prototype.dfsPreorder = function(node) {
 
     return order;
 };
+
+/**
+ * Performs depth-first search in post-order.
+ * @param  {Node} node Node to do search on
+ * @return {Array} A sequence of nodes' data
+ */
+Tree.prototype.dfsPostorder = function(node) {
+
+    var order = [];
+
+    if (node) {
+        order = order.concat(this.dfsPostorder(node.getLeft()));
+        order = order.concat(this.dfsPostorder(node.getRight()));
+        order.push(node.data);
+    }
+
+    return order;
+};
