@@ -67,3 +67,58 @@ Tree.prototype.dfsInorder = function(node) {
 
     return order;
 };
+
+/**
+ * Performs breadth-first search (level-order).
+ * @param  {Node} node Node to start search from
+ * @return {Array} A sequence of nodes' data
+ */
+Tree.prototype.bfs = function(node) {
+
+    var q = new Queue(),
+        order = [];
+
+    if (node) {
+        q.enqueue(node);
+    }
+
+    while (!q.isEmpty()) {
+        var next = q.dequeue(),
+            left = next.getLeft(),
+            right = next.getRight();
+
+        order.push(next.data);
+
+        if (left) {
+            q.enqueue(left);
+        }
+        if (right) {
+            q.enqueue(right);
+        }
+    }
+
+    return order;
+};
+
+/**
+ * Searches for the node with the specified data and returns true if found.
+ * @param  {any} data Data to search for
+ * @return {Boolean}
+ */
+Tree.prototype.contains = function(data) {
+
+    var cur = this.root;
+
+    while (cur) {
+
+        if (cur.data > data) {
+            cur = cur.getLeft();
+        } else if (cur.data < data) {
+            cur = cur.getRight();
+        } else {
+            return true;
+        }
+    }
+
+    return false;
+};
