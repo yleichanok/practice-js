@@ -13,7 +13,7 @@ function Tree(data) {
 }
 
 /**
- * Performs depth-first search in pre-order.
+ * Performs depth-first search using pre-order.
  * @see https://en.wikipedia.org/wiki/Tree_traversal#Depth-first_search
  * 
  * @param  {Node} node Node to perform search on
@@ -33,7 +33,7 @@ Tree.prototype.dfsPreorder = function(node) {
 };
 
 /**
- * Performs depth-first search in post-order.
+ * Performs depth-first search using post-order.
  * @param  {Node} node Node to do search on
  * @return {Array} A sequence of nodes' data
  */
@@ -45,6 +45,24 @@ Tree.prototype.dfsPostorder = function(node) {
         order = order.concat(this.dfsPostorder(node.getLeft()));
         order = order.concat(this.dfsPostorder(node.getRight()));
         order.push(node.data);
+    }
+
+    return order;
+};
+
+/**
+ * Performs depth-first search using in-order.
+ * @param  {Node} node Node to do search on
+ * @return {Array} A sequence of nodes' data
+ */
+Tree.prototype.dfsInorder = function(node) {
+
+    var order = [];
+
+    if (node) {
+        order = order.concat(this.dfsInorder(node.getLeft()));
+        order.push(node.data);
+        order = order.concat(this.dfsInorder(node.getRight()));
     }
 
     return order;
