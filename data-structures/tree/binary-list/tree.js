@@ -99,26 +99,3 @@ Tree.prototype.bfs = function(node) {
 
     return order;
 };
-
-/**
- * Searches for the node with the specified data and returns true if found.
- * @param  {any} data Data to search for
- * @return {Boolean}
- */
-Tree.prototype.contains = function(data) {
-
-    var cur = this.root;
-
-    while (cur) {
-
-        if (cur.data > data) {
-            cur = cur.getLeft();
-        } else if (cur.data < data) {
-            cur = cur.getRight();
-        } else {
-            return true;
-        }
-    }
-
-    return false;
-};

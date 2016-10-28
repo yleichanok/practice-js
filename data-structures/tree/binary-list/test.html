@@ -89,14 +89,6 @@
                 tree.root.setRight(3).setRight(7);
                 expect(tree.bfs(tree.root).join(' ')).to.be.equal('1 3 7');
             });
-
-            it('should search for element', function() {
-                var tree = new Tree(5);
-                tree.root.setLeft(3).setLeft(2).getParent().setRight(4);
-                tree.root.setRight(7).setLeft(6).getParent().setRight(8);
-                expect(tree.contains(4)).to.be.equal(true);
-                expect(tree.contains(9)).to.be.equal(false);
-            });
         });
 
         mocha.run();
