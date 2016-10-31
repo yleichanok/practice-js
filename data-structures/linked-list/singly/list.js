@@ -186,6 +186,10 @@ List.prototype.empty = function() {
     this._head = null;
 };
 
+/**
+ * Generates vizualization of the list.
+ * @return {String}
+ */
 List.prototype.pretty = function() {
 
     var s = [];

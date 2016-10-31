@@ -102,6 +102,19 @@
                 expect(list.first().prev.data).to.be.equal(3);
                 expect(list.first().next.next.data).to.be.equal(2);
             });
+            it('should pretty print the list', function() {
+                var list = new List();
+                list.append(1);
+                list.append(2);
+                list.append(3);
+                expect(list.pretty()).to.be.equal('1 -> <- 2 -> <- 3');
+            });
+            it('should pretty print the list', function() {
+                var list = new List(true);
+                list.append(1);
+                list.append(2);
+                expect(list.pretty()).to.be.equal('-> <- 1 -> <- 2 -> <-');
+            });
         });
 
         mocha.run();
