@@ -95,6 +95,19 @@
                 list.remove(list.first().next);
                 expect(list.first().data).to.be.equal(2);
             });
+            it('should pretty print the list', function() {
+                var list = new List();
+                list.append(1);
+                list.append(2);
+                list.append(3);
+                expect(list.pretty()).to.be.equal('1 -> 2 -> 3')
+            });
+            it('should pretty print the list', function() {
+                var list = new List(true);
+                list.append(1);
+                list.append(2);
+                expect(list.pretty()).to.be.equal('-> 1 -> 2 ->');
+            });
         });
 
         mocha.run();

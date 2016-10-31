@@ -185,3 +185,28 @@ List.prototype.empty = function() {
 
     this._head = null;
 };
+
+List.prototype.pretty = function() {
+
+    var s = [];
+    if (this._circular) {
+        s.push('-> ');
+    }
+
+    var cur = this._head;
+    while (cur) {
+        s.push(cur.data);
+
+        if (cur.next) {
+            s.push(' -> ');
+        }
+
+        if (cur.next !== this._head) {
+            cur = cur.next;
+        } else {
+            cur = null;
+        }
+    }
+
+    return s.join('').trim();
+};
