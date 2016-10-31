@@ -116,6 +116,7 @@ Queue.prototype.toArray = function() {
 Queue.prototype.pretty = function() {
 
     var s = this._els.reverse().join(' | ');
+    this._els.reverse(); // ???
     s = '-> ' + s + ' ->';
     return s;
 };
