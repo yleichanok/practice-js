@@ -108,3 +108,14 @@ Queue.prototype.isFull = function() {
 Queue.prototype.toArray = function() {
     return this._els;
 };
+
+/**
+ * Generates visualization of the queue.
+ * @return {String}
+ */
+Queue.prototype.pretty = function() {
+
+    var s = this._els.reverse().join(' | ');
+    s = '-> ' + s + ' ->';
+    return s;
+};

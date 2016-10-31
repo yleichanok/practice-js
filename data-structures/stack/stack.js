@@ -113,8 +113,8 @@ Stack.prototype.toArray = function() {
  * @return {String}
  */
 Stack.prototype.pretty = function() {
-    var s = [];
 
+    var s = [];
     s.push('|          |\n');
 
     for (var i = 0, l = this.size(); i < l; i++) {
