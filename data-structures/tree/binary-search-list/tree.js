@@ -100,3 +100,42 @@ Tree.prototype.contains = function(data) {
 
     return false;
 };
+
+/**
+ * Checks if the tree is actually a binary search tree:
+ * elements in left subtrees are less or equal, and right ones are more than the parent.
+ * @return {Boolean}
+ */
+Tree.prototype.verify = function() {
+
+    var res = 1;
+
+    function verify(node) {
+
+        if (node.parent) {
+            if (node.parent.left === node && node.data <= node.parent.data) {
+                res &= true;
+            } else if (node.parent.right === node && node.data > node.parent.data) {
+                res &= true;
+            } else {
+                res &= false;
+
+                // no need to check children
+                return;
+            }
+        }
+
+        if (node.left) {
+            verify(node.left);
+        }
+        if (node.right) {
+            verify(node.right);
+        }
+    }
+
+    if (this.root) {
+        verify(this.root);
+    }
+
+    return res === 1;
+};

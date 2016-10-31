@@ -45,10 +45,30 @@
                 tree.insert(11);
                 expect(tree.contains(11)).to.be.equal(true);
             });
+            
             it('should allow duplicate elements in the tree', function() {
                 var tree = new Tree([1,2,3,4,5,6,7,8,9]);
                 tree.insert(5);
                 expect(tree.root.left.right.right.right.data).to.be.equal(5);
+            });
+
+            it('should verify binary search tree', function() {
+                var tree = new Tree([1]);
+                expect(tree.verify()).to.be.equal(true);
+                tree.insert(2);
+                expect(tree.verify()).to.be.equal(true);
+                tree.insert(3);
+                expect(tree.verify()).to.be.equal(true);
+
+                tree.root.right.data = 5;
+                expect(tree.verify()).to.be.equal(false);
+            });
+            it('should verify binary search tree', function() {
+                var tree = new Tree([1,2,3,4,5,6,7,8,9]);
+                expect(tree.verify()).to.be.equal(true);
+
+                tree.root.data = 15;
+                expect(tree.verify()).to.be.equal(false);
             });
         });
 
