@@ -72,10 +72,74 @@ Tree.prototype.insert = function(data) {
 
 /**
  * Deletes the element from the tree.
- * @todo Implement
+ * @param {any} data Data to delete
  */
-Tree.prototype.delete = function() {
+Tree.prototype.delete = function(data) {
 
+    var cur = this.root,
+        branch = null;
+
+    function getMin(node) {
+
+        var min = node;
+
+        while (node.left) {
+            min = node.left;
+            node = node.left;
+        }
+
+        return min;
+    }
+
+    while (cur) {
+
+        if (cur.data === data) {
+            
+            if (!cur.left && !cur.right) {
+
+                // a. if node doesn't have any children
+                if (cur.parent) {
+                    cur.parent[branch] = null;
+                }
+                cur.parent = null;
+            } else if (cur.left && !cur.right) {
+
+                // b. if node has only one child
+                if (cur.parent) {
+                    cur.parent[branch] = cur.left;
+                }
+                cur.left.parent = cur.parent;
+            } else if (cur.right && !cur.left) {
+
+                // b. if node has only one child
+                if (cur.parent) {
+                    cur.parent[branch] = cur.right;
+                }
+                cur.right.parent = cur.parent;
+            } else {
+
+                // c. if node has two children - replace it with a minimum from the right subtree
+                var min = getMin(cur.right),
+                    minData = min.data;
+
+                this.delete(minData);
+                cur.data = minData;
+            }
+
+            return;
+        }
+
+        if (data > cur.data) {
+            branch = 'right';
+        } else {
+            branch = 'left';
+        }
+
+        cur = cur[branch];
+    }
+
+    // looked through all nodes, element not found
+    throw new Error('Not found.');
 };
 
 /**
