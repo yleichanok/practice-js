@@ -7,7 +7,7 @@
  * @param  {String} text Initial string
  * @return {String}
  */
-function reverse(text) {
+function reverse1(text) {
 
     if (typeof text !== 'string') {
         throw new Error('Text is missing.');
@@ -22,4 +22,18 @@ function reverse(text) {
     }
     
     return reversed.join('');
+}
+
+/**
+ * Returns a reversed string. Uses standard js functions.
+ * @param  {String} text Initial string
+ * @return {String}
+ */
+function reverse2(text) {
+
+    if (typeof text !== 'string') {
+        throw new Error('Text is missing.');
+    }
+
+    return text.split('').reverse().join('');
 }

@@ -92,6 +92,7 @@
 
                 tree.delete(5);
                 expect(tree.root.data).to.be.equal(6);
+                expect(tree.verify()).to.be.equal(true);
             });
         });
 

@@ -22,23 +22,44 @@
 
         var expect = chai.expect;
 
-        describe('reverse', function() {
+        describe('reverse1', function() {
             it('should return an empty string', function() {
-                expect(reverse('')).to.be.equal('');
+                expect(reverse1('')).to.be.equal('');
             });
             it('should reverse a string', function() {
-                expect(reverse('a')).to.be.equal('a');
+                expect(reverse1('a')).to.be.equal('a');
             });
             it('should reverse a string', function() {
-                expect(reverse('abc')).to.be.equal('cba');
+                expect(reverse1('abc')).to.be.equal('cba');
             });
             it('should reverse a string', function() {
-                expect(reverse('abcdef')).to.be.equal('fedcba');
+                expect(reverse1('abcdef')).to.be.equal('fedcba');
             });
             
             it('should throw an Error', function() {
                 expect(function() {
-                    reverse();
+                    reverse1();
+                }).to.throw(Error);
+            });
+        });
+
+        describe('reverse2', function() {
+            it('should return an empty string', function() {
+                expect(reverse2('')).to.be.equal('');
+            });
+            it('should reverse a string', function() {
+                expect(reverse2('a')).to.be.equal('a');
+            });
+            it('should reverse a string', function() {
+                expect(reverse2('abc')).to.be.equal('cba');
+            });
+            it('should reverse a string', function() {
+                expect(reverse2('abcdef')).to.be.equal('fedcba');
+            });
+            
+            it('should throw an Error', function() {
+                expect(function() {
+                    reverse2();
                 }).to.throw(Error);
             });
         });
