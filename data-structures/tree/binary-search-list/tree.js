@@ -7,7 +7,7 @@
  */
 function Tree(arr) {
 
-    if (arr instanceof Array === false) {
+    if (arr instanceof Array === false || arr.length === 0) {
         throw new Error('Invalid input.');
     }
 
