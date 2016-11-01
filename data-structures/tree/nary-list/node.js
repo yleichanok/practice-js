@@ -14,7 +14,7 @@ function Node(data, parent, children) {
 
 Node.prototype.getParent = function() {
     return this._parent;
-}
+};
 
 Node.prototype.getChildren = function() {
     return this._children;

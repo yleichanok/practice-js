@@ -203,3 +203,37 @@ Tree.prototype.verify = function() {
 
     return res === 1;
 };
+
+/**
+ * Finds the smallest element in the tree.
+ * @return {any}
+ */
+Tree.prototype.min = function() {
+
+    var cur = this.root,
+        min = null;
+
+    while (cur) {
+        min = cur ? cur.data : null;
+        cur = cur.left;
+    }
+
+    return min;
+};
+
+/**
+ * Returns the biggest element in the tree.
+ * @return {any}
+ */
+Tree.prototype.max = function() {
+
+    var cur = this.root,
+        max = null;
+
+    while (cur) {
+        max = cur ? cur.data : null;
+        cur = cur.right;
+    }
+
+    return max;
+};

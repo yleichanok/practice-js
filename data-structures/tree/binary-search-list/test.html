@@ -94,6 +94,21 @@
                 expect(tree.root.data).to.be.equal(6);
                 expect(tree.verify()).to.be.equal(true);
             });
+
+            it('should find the smallest element', function() {
+                var tree = new Tree([1,2,3,4,5,6,7,8,9]);
+                expect(tree.min()).to.be.equal(1);
+
+                tree.delete(1);
+                expect(tree.min()).to.be.equal(2);
+            });
+            it('should find the biggest element', function() {
+                var tree = new Tree([1,2,3,4,5,6,7,8,9]);
+                expect(tree.max()).to.be.equal(9);
+
+                tree.delete(7);
+                expect(tree.max()).to.be.equal(9);
+            });
         });
 
         mocha.run();
