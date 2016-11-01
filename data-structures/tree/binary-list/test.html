@@ -89,6 +89,25 @@
                 tree.root.setRight(3).setRight(7);
                 expect(tree.bfs(tree.root).join(' ')).to.be.equal('1 3 7');
             });
+
+            it('should find the smallest element', function() {
+                var tree = new Tree(1);
+                tree.root.setLeft(2).setLeft(4).getParent().setRight(5);
+                tree.root.setRight(3).setLeft(6).getParent().setRight(7);
+                expect(tree.min()).to.be.equal(1);
+
+                tree.root.getLeft().getLeft().setRight(-5);
+                expect(tree.min()).to.be.equal(-5);
+            });
+            it('should find the biggest element', function() {
+                var tree = new Tree(1);
+                tree.root.setLeft(2).setLeft(4).getParent().setRight(5);
+                tree.root.setRight(3).setLeft(6).getParent().setRight(7);
+                expect(tree.max()).to.be.equal(7);
+
+                tree.root.getLeft().getLeft().setRight(9);
+                expect(tree.max()).to.be.equal(9);
+            });
         });
 
         mocha.run();

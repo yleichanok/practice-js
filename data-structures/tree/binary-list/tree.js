@@ -99,3 +99,69 @@ Tree.prototype.bfs = function(node) {
 
     return order;
 };
+
+/**
+ * Finds the smallest element in the tree.
+ * Uses recursion.
+ * @return {[type]} [description]
+ */
+Tree.prototype.min = function() {
+
+    if (!this.root) {
+        throw new Error('Tree is empty.');
+    }
+
+    function min(node, num) {
+
+        if (node.data < num) {
+            num = node.data;
+        }
+
+        if (node.getLeft()) {
+            num = Math.min(num, min(node.getLeft(), num));
+        }
+        if (node.getRight()) {
+            num = Math.min(num, min(node.getRight(), num));
+        }
+
+        return num;
+    }
+
+    return min(this.root, this.root.data); 
+};
+
+/**
+ * Finds the biggest element in the tree.
+ * Uses breadth-first search.
+ * @return {any}
+ */
+Tree.prototype.max = function() {
+
+    if (!this.root) {
+        throw new Error('Tree is empty.');
+    }
+
+    var q = new Queue(),
+        max = this.root.data;
+
+    q.enqueue(this.root);
+
+    while (!q.isEmpty()) {
+        var next = q.dequeue(),
+            left = next.getLeft(),
+            right = next.getRight();
+
+        if (next.data > max) {
+            max = next.data;
+        }
+
+        if (left) {
+            q.enqueue(left);
+        }
+        if (right) {
+            q.enqueue(right);
+        }
+    }
+
+    return max;
+};
