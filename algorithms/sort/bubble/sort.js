@@ -4,6 +4,7 @@
  */
 Array.prototype.bubbleSort = function() {
 
+    // exit if nothing to sort
     if (this.length <= 1) {
         return;
     }
@@ -12,11 +13,12 @@ Array.prototype.bubbleSort = function() {
 
         var swapped = false;
 
+        // take every element and insert it earlier is needed
         for (var j = 0; j < l - 1; j++) {
             if (this[j + 1] < this[j]) {
-                var tmp = this[j];
-                this[j] = this[j + 1];
-                this[j + 1] = tmp;
+
+                // cool es6 way to swap variables
+                [this[j + 1], this[j]] = [this[j], this[j + 1]];
                 swapped = true;
             }
         }
