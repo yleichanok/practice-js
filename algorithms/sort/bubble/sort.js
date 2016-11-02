@@ -1,6 +1,8 @@
 /**
  * Sorts an array in ascending order using bubble sort.
  * @see https://en.wikipedia.org/wiki/Bubble_sort
+ *
+ * Average time complexity: O(n^2)
  */
 Array.prototype.bubbleSort = function() {
 

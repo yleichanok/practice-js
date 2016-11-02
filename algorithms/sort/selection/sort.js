@@ -1,6 +1,8 @@
 /**
  * Sorts the array in ascending order using selection sort.
  * @see https://en.wikipedia.org/wiki/Selection_sort
+ *
+ * Average time complexity: O(n^2)
  */
 Array.prototype.selectionSort = function() {
 

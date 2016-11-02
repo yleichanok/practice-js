@@ -1,6 +1,8 @@
 /**
  * Sorts the array using insertion sort.
  * @see https://en.wikipedia.org/wiki/Insertion_sort
+ *
+ * Average time complexity: O(n^2)
  */
 Array.prototype.insertionSort = function() {
 
