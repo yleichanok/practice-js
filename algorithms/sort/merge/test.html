@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Merge sort tests</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.1.2/mocha.min.css">
+</head>
+<body>
+
+    <div id="mocha"></div>
+    <div id="messages"></div>
+    <div id="fixtures"></div>
+    
+    <script src="https://cdn.rawgit.com/jquery/jquery/2.1.4/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/3.5.0/chai.js"></script>
+    <script src="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.js"></script>
+
+    <script src="./sort.js"></script>
+
+    <script>
+        mocha.setup('bdd');
+
+        var expect = chai.expect;
+
+        describe('mergeSort', function() {
+            it('should sort empty array', function() {
+                var arr = [];
+                expect(function() {
+                    arr.mergeSort();
+                }).to.not.throw(Error);
+            });
+            it('should sort numbers', function() {
+                var arr = [9,1,4,0,-3,8,1];
+                arr.mergeSort(); // [-3,0,1,1,4,8,9]
+                expect(arr[0]).to.be.equal(-3);
+                expect(arr[3]).to.be.equal(1);
+                expect(arr[arr.length - 1]).to.be.equal(9);
+            });
+            it('should sort strings', function() {
+                var arr = ['a','b','e','r','c','q','d'];
+                arr.mergeSort(); // ['a','b','c','d','e','q','r']
+                expect(arr[0]).to.be.equal('a');
+                expect(arr[2]).to.be.equal('c');
+                expect(arr[arr.length - 1]).to.be.equal('r');
+            });
+        });
+
+        mocha.run();
+    </script>
+</body>
+</html>
