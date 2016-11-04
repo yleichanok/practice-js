@@ -108,6 +108,16 @@
                 tree.root.getLeft().getLeft().setRight(9);
                 expect(tree.max()).to.be.equal(9);
             });
+
+            it('should invert the tree', function() {
+                var tree = new Tree(1);
+                tree.root.setLeft(2).setLeft(4).getParent().setRight(5);
+                tree.root.setRight(3).setLeft(6).getParent().setRight(7);
+                tree.invert();
+                expect(tree.root.data).to.be.equal(1);
+                expect(tree.root.getLeft().data).to.be.equal(3);
+                expect(tree.root.getRight().getRight().data).to.be.equal(4);
+            });
         });
 
         mocha.run();

@@ -165,3 +165,29 @@ Tree.prototype.max = function() {
 
     return max;
 };
+
+/**
+ * Swaps left subtree with right subtree, making a mirror reflection of the tree.
+ */
+Tree.prototype.invert = function() {
+
+    if (!this.root) {
+        throw new Error('Tree is empty.');
+    }
+
+    function invert(subtree) {
+
+        if (!subtree) {
+            return;
+        }
+
+        var tmp = subtree._left;
+        subtree._left = subtree._right;
+        subtree._right = tmp;
+
+        invert(subtree.getLeft());
+        invert(subtree.getRight());
+    }
+
+    invert(this.root);
+};
