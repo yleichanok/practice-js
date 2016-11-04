@@ -1,7 +1,7 @@
 /**
  * Binary search in a sorted array.
- * @param  {[type]} data [description]
- * @return {[type]}      [description]
+ * @param  {any} data Data to search for
+ * @return {Number} Element index (or -1 if not found)
  */
 Array.prototype.binarySearch = function(data) {
 
