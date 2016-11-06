@@ -17,18 +17,18 @@ Array.prototype.quickSort = function() {
             return;
         }
 
-        var mid = end;
+        var j = end;
 
-        for (var i = start; i < mid; i++) {
-            if (self[i] > self[mid]) {
-                self.splice(mid + 1, 0, self.splice(i, 1)[0]);
-                mid--;
+        for (var i = start; i < j; i++) {
+            if (self[i] > self[j]) {
+                self.splice(j + 1, 0, self.splice(i, 1)[0]);
+                j--;
                 i--;
             }
         }
 
-        partition(start, mid - 1);
-        partition(mid + 1, end);
+        partition(start, j - 1);
+        partition(j + 1, end);
 
     }
     partition(0, this.length - 1);
