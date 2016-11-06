@@ -2,7 +2,10 @@
  * Sorts the array in ascending order using selection sort.
  * @see https://en.wikipedia.org/wiki/Selection_sort
  *
- * Average time complexity: O(n^2)
+ * Algorithm: find the smallest element in the array and put it as the first one.
+ * Repeat for the rest of the array.
+ * 
+ * Running time is O(n^2).
  */
 Array.prototype.selectionSort = function() {
 
