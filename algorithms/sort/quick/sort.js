@@ -1,6 +1,13 @@
 /**
  * Sorts an array in ascending order using quick sort.
  * @see https://en.wikipedia.org/wiki/Quicksort
+ *
+ * Algorithm: select a 'pivot' element (in this implementation - the last one).
+ * For every element except the pivot check if it's less or greater than the pivot.
+ * If less - move it before the pivot, if greater - after the pivot.
+ * Repeat for two subarrays - before the pivot and after.
+ *
+ * Running time is O(n log n).
  */
 Array.prototype.quickSort = function() {
     
