@@ -2,7 +2,10 @@
  * Sorts the array using insertion sort.
  * @see https://en.wikipedia.org/wiki/Insertion_sort
  *
- * Average time complexity: O(n^2)
+ * Algorithm: for every element in the array check if it's less than the previous one.
+ * If so - move the element back by one position. Repeat if necessary.
+ *
+ * Running time is O(n^2).
  */
 Array.prototype.insertionSort = function() {
 
