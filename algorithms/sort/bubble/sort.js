@@ -2,7 +2,9 @@
  * Sorts an array in ascending order using bubble sort.
  * @see https://en.wikipedia.org/wiki/Bubble_sort
  *
- * Average time complexity: O(n^2)
+ * Algorithm: compare every pair of adjacent elements and swap them if necessary.
+ *
+ * Running time is O(n^2).
  */
 Array.prototype.bubbleSort = function() {
 
