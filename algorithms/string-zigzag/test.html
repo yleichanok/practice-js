@@ -22,15 +22,59 @@
 
         var expect = chai.expect;
 
-        describe('convert', function() {
+        describe('convert1', function() {
             it('should return an empty string', function() {
-                expect(convert('')).to.be.equal('');
+                expect(convert1('')).to.be.equal('');
             });
             it('should return converted string', function() {
                 // P   A   H   N
                 // A P L S I I G
                 // Y   I   R
-                expect(convert('PAYPALISHIRING', 3)).to.be.equal('PAHNAPLSIIGYIR');
+                expect(convert1('PAYPALISHIRING', 3)).to.be.equal('PAHNAPLSIIGYIR');
+            });
+            it('should return converted string', function() {
+                // P     I     N
+                // A   L S   I G
+                // Y A   H R
+                // P     I
+                expect(convert1('PAYPALISHIRING', 4)).to.be.equal('PINALSIGYAHRPI');
+            });
+
+            it('should throw an error', function() {
+                expect(function() {
+                    convert1();
+                }).to.throw(Error);
+                expect(function() {
+                    convert1('', -1);
+                }).to.throw(Error);
+            });
+        });
+
+        describe('convert2', function() {
+            it('should return an empty string', function() {
+                expect(convert2('')).to.be.equal('');
+            });
+            it('should return converted string', function() {
+                // P   A   H   N
+                // A P L S I I G
+                // Y   I   R
+                expect(convert2('PAYPALISHIRING', 3)).to.be.equal('PAHNAPLSIIGYIR');
+            });
+            it('should return converted string', function() {
+                // P     I     N
+                // A   L S   I G
+                // Y A   H R
+                // P     I
+                expect(convert2('PAYPALISHIRING', 4)).to.be.equal('PINALSIGYAHRPI');
+            });
+
+            it('should throw an error', function() {
+                expect(function() {
+                    convert2();
+                }).to.throw(Error);
+                expect(function() {
+                    convert2('', -1);
+                }).to.throw(Error);
             });
         });
 
