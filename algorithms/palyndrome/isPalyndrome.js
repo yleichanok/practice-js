@@ -5,7 +5,7 @@
  * @param  {String}  s Initial string
  * @return {Boolean}   Result
  */
-function isPalyndrome(s) {
+function isPalyndrome1(s) {
 
     if (typeof s !== 'string') {
         throw new Error('Invalid input.');
@@ -49,7 +49,37 @@ function isPalyndrome(s) {
     return true;
 }
 
-function isAlphanumeric(c) {
+/**
+ * Another implementation - removes all non-alphanumeric characters from the string
+ * as the first step.
+ * 
+ * @param  {String}  s String to check
+ * @return {Boolean}   Resule
+ */
+function isPalyndrome2(s) {
 
+    if (typeof s !== 'string') {
+        throw new Error('Invalid input.');
+    }
+
+    // first, remove all non-alphanumeric characters
+    s = s.replace(/\W/gi, '');
+
+    if (s.length <= 1) {
+        return true;
+    }
+
+    // then, check characters on both sides of the string
+    for (var i = 0, mid = (s.length - 1) / 2; i <= mid; i++) {
+
+        if (s[i].toLowerCase() !== s[s.length - 1 - i].toLowerCase()) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+function isAlphanumeric(c) {
     return c.match(/^\w{1}$/gi);
 }

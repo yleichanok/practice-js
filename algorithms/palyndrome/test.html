@@ -22,23 +22,43 @@
 
         var expect = chai.expect;
 
-        describe('isPalyndrome', function() {
+        describe('isPalyndrome1', function() {
             it('should return true', function() {
-                expect(isPalyndrome('')).to.be.equal(true);
-                expect(isPalyndrome('a')).to.be.equal(true);
+                expect(isPalyndrome1('')).to.be.equal(true);
+                expect(isPalyndrome1('a')).to.be.equal(true);
             });
             it('should return true', function() {
-                expect(isPalyndrome('abcde , edcba')).to.be.equal(true);
-                expect(isPalyndrome('  abcde     aa,edcba')).to.be.equal(true);
+                expect(isPalyndrome1('abcde , edcba')).to.be.equal(true);
+                expect(isPalyndrome1('  abcde     aa,edcba')).to.be.equal(true);
             });
             it('should return true', function() {
-                expect(isPalyndrome('1234abcd    , dcba4321')).to.be.equal(true);
+                expect(isPalyndrome1('1234abcd    , dcba4321')).to.be.equal(true);
             });
             it('should return true', function() {
-                expect(isPalyndrome('Red rum, sir, is murder')).to.be.equal(true);
+                expect(isPalyndrome1('Red rum, sir, is murder')).to.be.equal(true);
             });
             it('should return false', function() {
-                expect(isPalyndrome('test')).to.be.equal(false);
+                expect(isPalyndrome1('test')).to.be.equal(false);
+            });
+        });
+
+        describe('isPalyndrome2', function() {
+            it('should return true', function() {
+                expect(isPalyndrome2('')).to.be.equal(true);
+                expect(isPalyndrome2('a')).to.be.equal(true);
+            });
+            it('should return true', function() {
+                expect(isPalyndrome2('abcde , edcba')).to.be.equal(true);
+                expect(isPalyndrome2('  abcde     aa,edcba')).to.be.equal(true);
+            });
+            it('should return true', function() {
+                expect(isPalyndrome2('1234abcd    , dcba4321')).to.be.equal(true);
+            });
+            it('should return true', function() {
+                expect(isPalyndrome2('Red rum, sir, is murder')).to.be.equal(true);
+            });
+            it('should return false', function() {
+                expect(isPalyndrome2('test')).to.be.equal(false);
             });
         });
 
