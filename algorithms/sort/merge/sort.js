@@ -2,7 +2,10 @@
  * Sorts an array using merge sort.
  * @see https://en.wikipedia.org/wiki/Merge_sort
  *
- * Average time complexity: O(n log n)
+ * Algorithm: split initial array into small subarrays (length=1),
+ * then merge them back in correct order.
+ *
+ * Running time is O(n log n).
  */
 Array.prototype.mergeSort1 = function() {
     
