@@ -3,8 +3,10 @@
  * @see https://en.wikipedia.org/wiki/Binary_tree
  *
  *           1
+ *          / \
  *        2    3
- *      4  5     7
+ *       / \    \
+ *      4   5    7
  *          ||
  *          \/
  * [1, 2, 3, 4, 5, null, 7]
