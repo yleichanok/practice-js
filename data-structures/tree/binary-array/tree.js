@@ -156,3 +156,36 @@ Tree.prototype.dfsPostorder = function(index) {
 
     return order;
 };
+
+/**
+ * Runs depth-first search in order.
+ * @param  {Number} index Node index
+ * @return {Array}        A sequence of nodes' data
+ */
+Tree.prototype.dfsInorder = function(index) {
+
+    if (index < 0) {
+        throw new Error('Invalid index.');
+    }
+
+    var order = [],
+        el;
+
+    if (el = this._els[index]) {
+
+        var left = this.getLeft(index),
+            right = this.getRight(index);
+
+        if (left) {
+            order = order.concat(this.dfsInorder(left.index));
+        }
+
+        order.push(el.data);
+
+        if (right) {
+            order = order.concat(this.dfsInorder(right.index));
+        }
+    }
+
+    return order;
+};
