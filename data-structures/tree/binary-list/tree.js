@@ -181,9 +181,7 @@ Tree.prototype.invert = function() {
             return;
         }
 
-        var tmp = subtree._left;
-        subtree._left = subtree._right;
-        subtree._right = tmp;
+        [subtree._left, subtree._right] = [subtree._right, subtree._left];
 
         invert(subtree.getLeft());
         invert(subtree.getRight());
