@@ -227,3 +227,38 @@ Tree.prototype.bfs = function(index) {
 
     return order;
 };
+
+/**
+ * Swaps left subtree with right subtree, making a mirror reflection of the tree.
+ */
+Tree.prototype.invert = function() {
+
+    if (this._els.length === 0) {
+        return;
+    }
+
+    var level = 1,
+        index = 1,
+        total = Math.pow(2, level),
+        lastIndex = index + total - 1;
+
+    while (index < this._els.length) {
+
+        for (var i = 0; i < total / 2; i++) {
+
+            [this._els[i + index], this._els[lastIndex - i]] = [this._els[lastIndex - i], this._els[i + index]];
+
+            if (this._els[i + index]) {
+                this._els[i + index].index = i + index;
+            }
+            if (this._els[lastIndex - i]) {
+                this._els[lastIndex - i].index = lastIndex - i;
+            }
+        }
+
+        level++;
+        index += total;
+        total = Math.pow(2, level);
+        lastIndex += total;
+    }
+};
