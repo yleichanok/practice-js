@@ -191,3 +191,39 @@ Tree.prototype.dfsInorder = function(index) {
 
     return order;
 };
+
+/**
+ * Runs breadth-first search.
+ * @param  {Number} index [description]
+ * @return {[type]}       [description]
+ */
+Tree.prototype.bfs = function(index) {
+
+    if (index < 0) {
+        throw new Error('Invalid index.');
+    }
+
+    var queue = new Queue(),
+        order = [];
+
+    if (this._els[index]) {
+        queue.enqueue(this._els[index]);
+    }
+
+    while (!queue.isEmpty()) {
+        var el = queue.dequeue(),
+            left = this.getLeft(el.index),
+            right = this.getRight(el.index);
+
+        order.push(el.data);
+
+        if (left) {
+            queue.enqueue(left);
+        }
+        if (right) {
+            queue.enqueue(right);
+        }
+    }
+
+    return order;
+};
