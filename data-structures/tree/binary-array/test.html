@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Binary tree (array representation) tests</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.1.2/mocha.min.css">
+</head>
+<body>
+
+    <div id="mocha"></div>
+    <div id="messages"></div>
+    <div id="fixtures"></div>
+    
+    <script src="https://cdn.rawgit.com/jquery/jquery/2.1.4/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/3.5.0/chai.js"></script>
+    <script src="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.js"></script>
+
+    <script src="./node.js"></script>
+    <script src="./tree.js"></script>
+
+    <script>
+        mocha.setup('bdd');
+
+        var expect = chai.expect;
+
+        describe('Tree', function() {
+            it('should create a tree with a root', function() {
+                var tree = new Tree(1);
+                expect(tree.root.data).to.be.equal(1);
+                expect(tree.root.index).to.be.equal(0);
+                expect(tree.getLeft(0)).to.be.equal(null);
+                expect(tree.getRight(0)).to.be.equal(null);
+            });
+            it('should create a tree with children', function() {
+                var tree = new Tree(1);
+                tree.setLeft(0, 2);
+                tree.setLeft(tree.getLeft(0).index, 4);
+                tree.setRight(tree.getLeft(0).index, 5);
+                tree.setRight(0, 3);
+                expect(tree.getLeft(0).data).to.be.equal(2);
+                expect(tree.getRight(0).data).to.be.equal(3);
+                expect(tree.getLeft(tree.getLeft(0).index).data).to.be.equal(4);
+            });
+        });
+
+        mocha.run();
+    </script>
+</body>
+</html>
