@@ -96,7 +96,7 @@ Tree.prototype.setRight = function(index, data) {
 /**
  * Runs depth-first traversal in pre-order (parent first).
  * @param  {Number} index Node index
- * @return {Array}       A sequence of nodes' data
+ * @return {Array}        A sequence of nodes' data
  */
 Tree.prototype.dfsPreorder = function(index) {
 
@@ -108,6 +108,7 @@ Tree.prototype.dfsPreorder = function(index) {
         el;
 
     if (el = this._els[index]) {
+
         order.push(el.data);
 
         var left = this.getLeft(index),
@@ -119,6 +120,38 @@ Tree.prototype.dfsPreorder = function(index) {
         if (right) {
             order = order.concat(this.dfsPreorder(right.index));
         }
+    }
+
+    return order;
+};
+
+/**
+ * Runs depth-first traversal in post-order.
+ * @param  {Number} index Node index
+ * @return {Array}        A sequence of nodes' data
+ */
+Tree.prototype.dfsPostorder = function(index) {
+
+    if (index < 0) {
+        throw new Error('Invalid index.');
+    }
+
+    var order = [],
+        el;
+
+    if (el = this._els[index]) {
+
+        var left = this.getLeft(index),
+            right = this.getRight(index);
+
+        if (left) {
+            order = order.concat(this.dfsPostorder(left.index));
+        }
+        if (right) {
+            order = order.concat(this.dfsPostorder(right.index));
+        }
+
+        order.push(el.data);
     }
 
     return order;
