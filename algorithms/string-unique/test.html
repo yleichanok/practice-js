@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>String unique tests</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.1.2/mocha.min.css">
+</head>
+<body>
+
+    <div id="mocha"></div>
+    <div id="messages"></div>
+    <div id="fixtures"></div>
+    
+    <script src="https://cdn.rawgit.com/jquery/jquery/2.1.4/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/3.5.0/chai.js"></script>
+    <script src="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.js"></script>
+
+    <script src="./check.js"></script>
+
+    <script>
+        mocha.setup('bdd');
+
+        var expect = chai.expect;
+
+        describe('check1', function() {
+            it('should return true', function() {
+                expect(check1('')).to.be.equal(true);
+            });
+            it('should return true', function() {
+                expect(check1('abcdefg')).to.be.equal(true);
+            });
+            it('should return true', function() {
+                expect(check1('aAbBcC')).to.be.equal(true);
+            });
+            it('should return false', function() {
+                expect(check1('abcdefga')).to.be.equal(false);
+            });
+            it('should return false', function() {
+                expect(check1('aa')).to.be.equal(false);
+            });
+
+            it('should throw an Error', function() {
+                expect(function() {
+                    check1();
+                }).to.throw(Error);
+            });
+        });
+
+        describe('check2', function() {
+            it('should return true', function() {
+                expect(check2('')).to.be.equal(true);
+            });
+            it('should return true', function() {
+                expect(check2('abcdefg')).to.be.equal(true);
+            });
+            it('should return true', function() {
+                expect(check2('aAbBcC')).to.be.equal(true);
+            });
+            it('should return false', function() {
+                expect(check2('abcdefga')).to.be.equal(false);
+            });
+            it('should return false', function() {
+                expect(check2('aa')).to.be.equal(false);
+            });
+
+            it('should throw an Error', function() {
+                expect(function() {
+                    check2();
+                }).to.throw(Error);
+            });
+        });
+
+        mocha.run();
+    </script>
+</body>
+</html>
