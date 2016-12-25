@@ -27,7 +27,7 @@ function check1(text) {
 }
 
 /**
- * Another implementation using additional data structure.
+ * Another implementation with running time O(n), but using additional data structure.
  * @param  {String} text Input string
  * @return {Boolean}
  */
