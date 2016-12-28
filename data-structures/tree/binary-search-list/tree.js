@@ -27,9 +27,16 @@ function Tree(arr) {
         }
 
         var median = Math.floor((subarr.length - 1) / 2),
-            node = new Node(subarr[median], parent);
+            medianEl = subarr[median];
 
-        var left = createNode(subarr.slice(0, median), node),
+        // if there are any duplicate elements - put them into the same subtree
+        while (subarr[median + 1] && subarr[median + 1] === subarr[median - 1]) {
+            median++;
+            medianEl = subarr[median];
+        }
+
+        var node = new Node(subarr[median], parent),
+            left = createNode(subarr.slice(0, median), node),
             right = createNode(subarr.slice(median + 1), node);
 
         node.left = left;
