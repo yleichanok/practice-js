@@ -67,7 +67,7 @@ Tree.prototype.insert = function(data) {
         prev.left = node;
     } else {
         prev.right = node;
-    }
+    }  
 };
 
 /**
@@ -236,4 +236,28 @@ Tree.prototype.max = function() {
     }
 
     return max;
+};
+
+/**
+ * Calculates the height of the tree.
+ * @return {Number}
+ */
+Tree.prototype.height = function(node) {
+
+    var h = 0;
+
+    if (node) {
+        h++;
+
+        var leftHeight = this.height(node.left),
+            rightHeight = this.height(node.right);
+
+        if (leftHeight >= rightHeight) {
+            h += leftHeight;
+        } else {
+            h += rightHeight;
+        }
+    }
+
+    return h;
 };
