@@ -116,6 +116,7 @@ Tree.prototype.delete = function(data) {
                     cur.parent[branch] = cur.left;
                 }
                 cur.left.parent = cur.parent;
+                cur = cur.parent;
             } else if (cur.right && !cur.left) {
 
                 // b. if node has only one child
@@ -123,6 +124,7 @@ Tree.prototype.delete = function(data) {
                     cur.parent[branch] = cur.right;
                 }
                 cur.right.parent = cur.parent;
+                cur = cur.parent;
             } else {
 
                 // c. if node has two children - replace it with a minimum from the right subtree
@@ -132,21 +134,16 @@ Tree.prototype.delete = function(data) {
                 this.delete(minData);
                 cur.data = minData;
             }
-
-            return;
         }
 
-        if (data > cur.data) {
-            branch = 'right';
-        } else {
+        if (data <= cur.data) {
             branch = 'left';
+        } else {
+            branch = 'right';
         }
 
         cur = cur[branch];
     }
-
-    // looked through all nodes, element not found
-    throw new Error('Not found.');
 };
 
 /**
