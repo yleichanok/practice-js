@@ -251,16 +251,7 @@ Tree.prototype.height = function(node) {
     var h = 0;
 
     if (node) {
-        h++;
-
-        var leftHeight = this.height(node.left),
-            rightHeight = this.height(node.right);
-
-        if (leftHeight >= rightHeight) {
-            h += leftHeight;
-        } else {
-            h += rightHeight;
-        }
+        h += Math.max(this.height(node.left), this.height(node.right)) + 1;    
     }
 
     return h;
