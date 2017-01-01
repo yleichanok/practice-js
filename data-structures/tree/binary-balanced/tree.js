@@ -45,19 +45,24 @@ function Tree(arr) {
             medianEl = subarr[median];
 
         var node = new Node(medianEl, parent),
-            left = createNode(subarr.slice(0, median), node),
-            right = createNode(subarr.slice(median + 1), node);
+            left = createNode.call(this, subarr.slice(0, median), node),
+            right = createNode.call(this, subarr.slice(median + 1), node);
 
         node.count = count[medianEl];
         node.left = left;
         node.right = right;
+        node.height = 1 + Math.max(this._height(left), this._height(right));
 
         return node;
     }
 
     // generate initial binary search tree
-    this.root = createNode(arr);
+    this.root = createNode.call(this, arr);
 }
+
+Tree.prototype._height = function(node) {
+    return node ? node.height : 0;
+};
 
 /**
  * Inserts new element into the tree.
@@ -87,7 +92,14 @@ Tree.prototype.insert = function(data) {
         prev.left = node;
     } else {
         prev.right = node;
-    }  
+    }
+
+    // update node heights
+    var parent = node.parent;
+    while (parent) {
+        parent.height = 1 + Math.max(this._height(parent.left), this._height(parent.right));
+        parent = parent.parent;
+    }
 };
 
 /**
@@ -159,30 +171,6 @@ Tree.prototype.delete = function(data) {
 
         cur = cur[branch];
     }
-};
-
-/**
- * Calculates the height of the tree.
- * @return {Number}
- */
-Tree.prototype.height = function(node) {
-
-    var h = 0;
-
-    if (node) {
-        h++;
-
-        var leftHeight = this.height(node.left),
-            rightHeight = this.height(node.right);
-
-        if (leftHeight >= rightHeight) {
-            h += leftHeight;
-        } else {
-            h += rightHeight;
-        }
-    }
-
-    return h;
 };
 
 /**

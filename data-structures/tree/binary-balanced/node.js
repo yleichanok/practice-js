@@ -9,6 +9,7 @@ function Node(data, parent, left, right) {
 
     this.data = data;
     this.count = 1;
+    this.height = 0;
 
     this.parent = parent || null;
     this.left = left || null;

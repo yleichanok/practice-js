@@ -241,18 +241,3 @@ Tree.prototype.max = function() {
 
     return max;
 };
-
-/**
- * Calculates the height of the tree.
- * @return {Number}
- */
-Tree.prototype.height = function(node) {
-
-    var h = 0;
-
-    if (node) {
-        h += Math.max(this.height(node.left), this.height(node.right)) + 1;    
-    }
-
-    return h;
-};
