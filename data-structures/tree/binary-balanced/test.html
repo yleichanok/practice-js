@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Base BST tests</title>
+    <title>Self-balancing BST tests</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.1.2/mocha.min.css">
 </head>
 <body>
@@ -15,8 +15,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/3.5.0/chai.js"></script>
     <script src="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.js"></script>
 
+    <script src="../../queue/queue.js"></script>
     <script src="./node.js"></script>
     <script src="./tree.js"></script>
+    <script src="./avl.js"></script>
 
     <script>
         mocha.setup('bdd');
@@ -93,6 +95,15 @@
                 tree.delete(12);
                 expect(tree.height(tree.root)).to.be.equal(5);
             });
+        });
+
+        describe('AVLTree', function() {
+            it('should create a tree with data', function() {
+                var tree = new Tree([1,2,3,4,5,6,7,8,9]);
+                expect(tree.root.data).to.be.equal(5);
+                expect(tree.root.left.data).to.be.equal(2);
+            });
+            
         });
 
         mocha.run();

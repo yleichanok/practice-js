@@ -184,3 +184,56 @@ Tree.prototype.height = function(node) {
 
     return h;
 };
+
+/**
+ * Generates string representation of the tree.
+ * @return {String}
+ */
+Tree.prototype.pretty = function() {
+
+    var maxLevel = 0;
+
+    // calculate each node position in DFS and their vertical level
+    function prepare(node, level) {
+        
+        var nodes = [];
+
+        if (node) {
+            if (level > maxLevel) {
+                maxLevel = level;
+            }
+
+            nodes = nodes.concat(prepare(node.left, level + 1));
+
+            nodes.push({
+                node: node,
+                level: level
+            });
+
+            nodes = nodes.concat(prepare(node.right, level + 1));
+        }
+
+        return nodes;
+    }
+
+    var nodes = prepare(this.root, 0),
+        res = Array(maxLevel + 1).fill(''),
+        offset = 0;
+
+    for (var i = 0, l = nodes.length; i < l; i++) {
+        var node = nodes[i],
+            prettyNode = node.node.pretty();
+
+        prettyNode = '  ' + prettyNode + '  ';
+
+        for (var j = 0; j <= maxLevel; j++) {
+            if (j === node.level) {
+                res[j] += prettyNode;
+            } else {
+                res[j] += Array(prettyNode.length).fill(' ').join('');
+            }
+        }
+    }
+
+    return res.join('\n');
+};

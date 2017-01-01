@@ -14,3 +14,8 @@ function Node(data, parent, left, right) {
     this.left = left || null;
     this.right = right || null;
 }
+
+Node.prototype.pretty = function() {
+
+    return this.data + (this.count > 1 ? '*' : '');
+};
