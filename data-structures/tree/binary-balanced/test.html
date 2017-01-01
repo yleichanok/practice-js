@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Self-balancing BST tests</title>
+    <title>AVL tree tests</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.1.2/mocha.min.css">
 </head>
 <body>
@@ -17,7 +17,6 @@
 
     <script src="../../queue/queue.js"></script>
     <script src="./node.js"></script>
-    <script src="./tree.js"></script>
     <script src="./avl.js"></script>
 
     <script>
@@ -25,16 +24,16 @@
 
         var expect = chai.expect;
 
-        describe('Tree', function() {
+        describe('AVLTree', function() {
             it('should create a tree with data', function() {
-                var tree = new Tree([1,2,3,4,5,6,7,8,9]);
+                var tree = new AVLTree([1,2,3,4,5,6,7,8,9]);
                 expect(tree.root.data).to.be.equal(5);
                 expect(tree.root.left.data).to.be.equal(2);
                 expect(tree.root.height).to.be.equal(3);
                 expect(tree.root.left.height).to.be.equal(2);
             });
             it('should create a tree with duplicated elements', function() {
-                var tree = new Tree([1,2,3,4,5,6,7,7,7,7,8,9]);
+                var tree = new AVLTree([1,2,3,4,5,6,7,7,7,7,8,9]);
                 expect(tree.root.data).to.be.equal(5);
                 expect(tree.root.left.data).to.be.equal(2);
                 expect(tree.root.right.data).to.be.equal(7);
@@ -44,21 +43,21 @@
             });
 
             it('should insert element into the tree', function() {
-                var tree = new Tree([1,2,3,4,5,6,7,8,9]);
+                var tree = new AVLTree([1,2,3,4,5,6,7,8,9]);
                 tree.insert(10);
                 expect(tree.root.right.right.right.right.data).to.be.equal(10);
                 expect(tree.root.height).to.be.equal(4);
                 expect(tree.root.right.right.right.height).to.be.equal(1);
             });
             it('should allow duplicate elements in the tree', function() {
-                var tree = new Tree([1,2,3,4,5,6,7,8,9]);
+                var tree = new AVLTree([1,2,3,4,5,6,7,8,9]);
                 tree.insert(5);
                 expect(tree.root.count).to.be.equal(2);
                 expect(tree.root.left.right.right.right).to.be.equal(null);
             });
 
             it('should delete a node', function() {
-                var tree = new Tree([1]);
+                var tree = new AVLTree([1]);
                 tree.insert(2);
                 tree.insert(3);
                 tree.insert(4);
@@ -71,7 +70,7 @@
                 expect(tree.root.right.right).to.be.equal(null);
             });
             it('should delete a node', function() {
-                var tree = new Tree([1,2,3,4,5,6,7,8,9]);
+                var tree = new AVLTree([1,2,3,4,5,6,7,8,9]);
                 tree.delete(7);
                 expect(tree.root.right.data).to.be.equal(8);
 
@@ -79,21 +78,12 @@
                 expect(tree.root.data).to.be.equal(6);
             });
             it('should delete duplicated nodes', function() {
-                var tree = new Tree([1,2,3,4,5,6,7,7,7,7,8,9]);
+                var tree = new AVLTree([1,2,3,4,5,6,7,7,7,7,8,9]);
                 tree.delete(7);
                 expect(tree.root.right.data).to.be.equal(8);
                 expect(tree.root.right.left.data).to.be.equal(6);
                 expect(tree.root.right.right.data).to.be.equal(9);
             });
-        });
-
-        describe('AVLTree', function() {
-            it('should create a tree with data', function() {
-                var tree = new Tree([1,2,3,4,5,6,7,8,9]);
-                expect(tree.root.data).to.be.equal(5);
-                expect(tree.root.left.data).to.be.equal(2);
-            });
-            
         });
 
         mocha.run();
