@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flatten array tests</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.1.2/mocha.min.css">
+</head>
+<body>
+
+    <div id="mocha"></div>
+    <div id="messages"></div>
+    <div id="fixtures"></div>
+    
+    <script src="https://cdn.rawgit.com/jquery/jquery/2.1.4/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/3.5.0/chai.js"></script>
+    <script src="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.js"></script>
+
+    <script src="./flatten.js"></script>
+
+    <script>
+        mocha.setup('bdd');
+
+        var expect = chai.expect;
+
+        describe('flatten', function() {
+            it('should flatten array', function() {
+                var arr = [1,2,3,4,5,6];
+                arr.flatten();
+                expect(arr.length).to.be.equal(6);
+            });
+            it('should flatten array', function() {
+                var arr = [[],[1],[2,3],4,5,6];
+                arr.flatten();
+                expect(arr.length).to.be.equal(6);
+                expect(arr[0]).to.be.equal(1);
+            });
+            it('should flatten array', function() {
+                var arr = [1,2,[1,2],[[[4],5],6]];
+                arr.flatten();
+                expect(arr.length).to.be.equal(7);
+                expect(arr[4]).to.be.equal(4);
+            });
+        });
+
+        mocha.run();
+    </script>
+</body>
+</html>
