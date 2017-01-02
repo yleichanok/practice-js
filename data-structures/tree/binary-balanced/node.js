@@ -17,6 +17,5 @@ function Node(data, parent, left, right) {
 }
 
 Node.prototype.pretty = function() {
-
     return this.data + (this.count > 1 ? '*' : '');
 };

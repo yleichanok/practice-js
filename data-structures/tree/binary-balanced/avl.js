@@ -70,6 +70,8 @@ AVLTree.prototype.insert = function(data) {
     var cur = this.root,
         prev = null;
 
+    //debugger;
+
     // find the best position for the new element
     while (cur) {
 
@@ -80,6 +82,8 @@ AVLTree.prototype.insert = function(data) {
             cur = cur.right;
         } else if (cur.data === data) {
             cur.count++;
+
+            // no need to update heights or rebalance the tree - no new nodes added
             return;
         }
     }
@@ -95,6 +99,21 @@ AVLTree.prototype.insert = function(data) {
     var parent = node.parent;
     while (parent) {
         parent.height = 1 + Math.max(this._height(parent.left), this._height(parent.right));
+
+        // rotate subtree if necessary
+        var balanceFactor = this._balanceFactor(parent);
+        if (balanceFactor > 1 && data < parent.left.data) {
+            this._rotateRight(parent);
+        } else if (balanceFactor < -1 && data > parent.right.data) {
+            this._rotateLeft(parent);
+        } else if (balanceFactor > 1 && data > parent.left.data) {
+            this._rotateLeft(parent.left);
+            this._rotateRight(parent);
+        } else if (balanceFactor < -1 && data < parent.right.data) {
+            this._rotateRight(parent.right);
+            this._rotateLeft(parent);
+        }
+
         parent = parent.parent;
     }
 };
@@ -215,6 +234,7 @@ AVLTree.prototype.pretty = function() {
             if (j === node.level) {
                 res[j] += prettyNode;
             } else {
+                // fill the space with whitespaces
                 res[j] += Array(prettyNode.length).fill(' ').join('');
             }
         }
@@ -235,9 +255,67 @@ AVLTree.prototype._height = function(node) {
 
 /**
  * Helper function. Returns balance factor of the node.
+ * Balance factor of the node is a difference between the height of the left and right subtrees.
+ * Balance factor should stay between [-1, 1] in order to keep the tree balanced.
  * @param  {Node} node
  * @return {Number}
  */
 AVLTree.prototype._balanceFactor = function(node) {
     return node ? this._height(node.left) - this._height(node.right) : 0;
+};
+
+/**
+ * Helper function. Performs left subtree rotation, updates nodes' heights.
+ * @param  {Node} node Subtree root
+ */
+AVLTree.prototype._rotateLeft = function(node) {
+
+    var parent = node.parent;
+    node.parent = node.right;
+    node.right = node.parent.left;
+    node.parent.left = node;
+    node.parent.parent = parent;
+
+    if (node.parent.parent) {
+        if (node.parent.data > node.parent.parent.data) {
+            node.parent.parent.right = node.parent;
+        } else {
+            node.parent.parent.left = node.parent;
+        }
+    }
+
+    if (node.data === this.root.data) {
+        this.root = node.parent;
+    }
+
+    node.height = 1 + Math.max(this._height(node.left), this._height(node.right));
+    node.parent.height = 1 + Math.max(this._height(node.parent.left), this._height(node.parent.right));
+};
+
+/**
+ * Helper function. Performs right subtree rotation, updates nodes' heights.
+ * @param  {Node} node Subtree root
+ */
+AVLTree.prototype._rotateRight = function(node) {
+
+    var parent = node.parent;
+    node.parent = node.left;
+    node.left = node.parent.right;
+    node.parent.right = node;
+    node.parent.parent = parent;
+
+    if (node.parent.parent) {
+        if (node.parent.data > node.parent.parent.data) {
+            node.parent.parent.right = node.parent;
+        } else {
+            node.parent.parent.left = node.parent;
+        }
+    }
+
+    if (node.data === this.root.data) {
+        this.root = node.parent;
+    }
+
+    node.height = 1 + Math.max(this._height(node.left), this._height(node.right));
+    node.parent.height = 1 + Math.max(this._height(node.parent.left), this._height(node.parent.right));
 };

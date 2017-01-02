@@ -45,9 +45,9 @@
             it('should insert element into the tree', function() {
                 var tree = new AVLTree([1,2,3,4,5,6,7,8,9]);
                 tree.insert(10);
-                expect(tree.root.right.right.right.right.data).to.be.equal(10);
-                expect(tree.root.height).to.be.equal(4);
-                expect(tree.root.right.right.right.height).to.be.equal(1);
+                expect(tree.root.right.right.right.data).to.be.equal(10);
+                expect(tree.root.height).to.be.equal(3);
+                expect(tree.root.right.right.right.height).to.be.equal(0);
             });
             it('should allow duplicate elements in the tree', function() {
                 var tree = new AVLTree([1,2,3,4,5,6,7,8,9]);
@@ -63,11 +63,11 @@
                 tree.insert(4);
 
                 tree.delete(3);
-                expect(tree.root.right.right.data).to.be.equal(4);
+                expect(tree.root.right.data).to.be.equal(4);
 
                 tree.delete(4);
-                expect(tree.root.right.data).to.be.equal(2);
-                expect(tree.root.right.right).to.be.equal(null);
+                expect(tree.root.data).to.be.equal(2);
+                expect(tree.root.right).to.be.equal(null);
             });
             it('should delete a node', function() {
                 var tree = new AVLTree([1,2,3,4,5,6,7,8,9]);
