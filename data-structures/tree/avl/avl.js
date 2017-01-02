@@ -95,7 +95,7 @@ AVLTree.prototype.insert = function(data) {
         prev.right = node;
     }
 
-    // update node heights
+    // update node heights and rotate subtrees if necessary
     var parent = node.parent;
     while (parent) {
         parent.height = 1 + Math.max(this._height(parent.left), this._height(parent.right));
