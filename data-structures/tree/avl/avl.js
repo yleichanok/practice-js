@@ -142,6 +142,8 @@ AVLTree.prototype.delete = function(data) {
     while (cur) {
 
         if (cur.data === data) {
+
+            var parent;
             
             if (!cur.left && !cur.right) {
 
@@ -149,6 +151,7 @@ AVLTree.prototype.delete = function(data) {
                 if (cur.parent) {
                     cur.parent[branch] = null;
                 }
+                parent = cur.parent;
                 cur.parent = null;
             } else if (cur.left && !cur.right) {
 
@@ -158,6 +161,7 @@ AVLTree.prototype.delete = function(data) {
                 }
                 cur.left.parent = cur.parent;
                 cur = cur.parent;
+                parent = cur;
             } else if (cur.right && !cur.left) {
 
                 // b. if node has only one child
@@ -166,6 +170,7 @@ AVLTree.prototype.delete = function(data) {
                 }
                 cur.right.parent = cur.parent;
                 cur = cur.parent;
+                parent = cur;
             } else {
 
                 // c. if node has two children - replace it with a minimum from the right subtree
@@ -174,6 +179,28 @@ AVLTree.prototype.delete = function(data) {
 
                 this.delete(minData);
                 cur.data = minData;
+                parent = cur;
+            }
+
+            // update nodes heights and balance the tree
+            while (parent) {
+                parent.height = 1 + Math.max(this._height(parent.left), this._height(parent.right));
+
+                // rotate subtree if necessary
+                var balanceFactor = this._balanceFactor(parent);
+                if (balanceFactor > 1 && this._balanceFactor(parent.left) >= 0) {
+                    this._rotateRight(parent);
+                } else if (balanceFactor < -1 && this._balanceFactor(parent.right) <= 0) {
+                    this._rotateLeft(parent);
+                } else if (balanceFactor > 1 && this._balanceFactor(parent.left) < 0) {
+                    this._rotateLeft(parent.left);
+                    this._rotateRight(parent);
+                } else if (balanceFactor < -1 && this._balanceFactor(parent.right) > 0) {
+                    this._rotateRight(parent.right);
+                    this._rotateLeft(parent);
+                }
+
+                parent = parent.parent;
             }
 
             return;
