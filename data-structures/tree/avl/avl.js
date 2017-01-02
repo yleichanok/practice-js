@@ -95,27 +95,7 @@ AVLTree.prototype.insert = function(data) {
         prev.right = node;
     }
 
-    // update node heights and rotate subtrees if necessary
-    var parent = node.parent;
-    while (parent) {
-        parent.height = 1 + Math.max(this._height(parent.left), this._height(parent.right));
-
-        // rotate subtree if necessary
-        var balanceFactor = this._balanceFactor(parent);
-        if (balanceFactor > 1 && data < parent.left.data) {
-            this._rotateRight(parent);
-        } else if (balanceFactor < -1 && data > parent.right.data) {
-            this._rotateLeft(parent);
-        } else if (balanceFactor > 1 && data > parent.left.data) {
-            this._rotateLeft(parent.left);
-            this._rotateRight(parent);
-        } else if (balanceFactor < -1 && data < parent.right.data) {
-            this._rotateRight(parent.right);
-            this._rotateLeft(parent);
-        }
-
-        parent = parent.parent;
-    }
+    this.rebalance(node.parent);
 };
 
 /**
@@ -182,27 +162,7 @@ AVLTree.prototype.delete = function(data) {
                 parent = cur;
             }
 
-            // update nodes heights and balance the tree
-            while (parent) {
-                parent.height = 1 + Math.max(this._height(parent.left), this._height(parent.right));
-
-                // rotate subtree if necessary
-                var balanceFactor = this._balanceFactor(parent);
-                if (balanceFactor > 1 && this._balanceFactor(parent.left) >= 0) {
-                    this._rotateRight(parent);
-                } else if (balanceFactor < -1 && this._balanceFactor(parent.right) <= 0) {
-                    this._rotateLeft(parent);
-                } else if (balanceFactor > 1 && this._balanceFactor(parent.left) < 0) {
-                    this._rotateLeft(parent.left);
-                    this._rotateRight(parent);
-                } else if (balanceFactor < -1 && this._balanceFactor(parent.right) > 0) {
-                    this._rotateRight(parent.right);
-                    this._rotateLeft(parent);
-                }
-
-                parent = parent.parent;
-            }
-
+            this.rebalance(parent);
             return;
         }
 
@@ -213,6 +173,33 @@ AVLTree.prototype.delete = function(data) {
         }
 
         cur = cur[branch];
+    }
+};
+
+/**
+ * Rebalances the subtree to satisft AVL tree definition.
+ * @param  {Node} node Subtree root
+ */
+AVLTree.prototype.rebalance = function(node) {
+
+    while (node) {
+        node.height = 1 + Math.max(this._height(node.left), this._height(node.right));
+
+        // rotate subtree if necessary
+        var balanceFactor = this._balanceFactor(node);
+        if (balanceFactor > 1 && this._balanceFactor(node.left) >= 0) {
+            this._rotateRight(node);
+        } else if (balanceFactor < -1 && this._balanceFactor(node.right) <= 0) {
+            this._rotateLeft(node);
+        } else if (balanceFactor > 1 && this._balanceFactor(node.left) < 0) {
+            this._rotateLeft(node.left);
+            this._rotateRight(node);
+        } else if (balanceFactor < -1 && this._balanceFactor(node.right) > 0) {
+            this._rotateRight(node.right);
+            this._rotateLeft(node);
+        }
+
+        node = node.parent;
     }
 };
 
