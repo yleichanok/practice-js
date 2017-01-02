@@ -230,5 +230,14 @@ AVLTree.prototype.pretty = function() {
  * @return {Number}
  */
 AVLTree.prototype._height = function(node) {
-    return node ? node.height : 0;
+    return node ? node.height : -1;
+};
+
+/**
+ * Helper function. Returns balance factor of the node.
+ * @param  {Node} node
+ * @return {Number}
+ */
+AVLTree.prototype._balanceFactor = function(node) {
+    return node ? this._height(node.left) - this._height(node.right) : 0;
 };
