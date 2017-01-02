@@ -8,12 +8,10 @@ Array.prototype.flatten = function() {
     for (var i = 0; i < this.length; i++) {
 
         if (Array.isArray(this[i])) {
-
-            this[i].flatten();
-
-            var len = this[i].length;
             Array.prototype.splice.apply(this, [i, 1].concat(this[i]));
-            i += len - 1;
+
+            // go back one step and check new element
+            i--;
         }
     }
 };
