@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>getElementsByClassName tests</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.1.2/mocha.min.css">
+</head>
+<body>
+
+    <div id="mocha"></div>
+    <div id="messages"></div>
+    <div id="fixtures"></div>
+
+    <div class="c4"></div>
+
+    <div id="context">
+        <div class="c1">
+            <div class="c3"></div>
+        </div>
+        <div class="c2">
+            <div class="c3"></div>
+            <div class="c4"></div>
+        </div>
+        <div class="c5">
+            <div></div>
+            <div class="c3">
+                <div class="c4 c2"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.rawgit.com/jquery/jquery/2.1.4/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/3.5.0/chai.js"></script>
+    <script src="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.js"></script>
+
+    <script src="./getElementsByClassName.js"></script>
+
+    <script>
+        mocha.setup('bdd');
+
+        var expect = chai.expect;
+
+        describe('getElementsByClassName', function() {
+            it('should return one element', function() {
+                expect(getElementsByClassName('c1').length).to.be.equal(1);
+                expect(getElementsByClassName('c1')[0]).to.be.equal(document.getElementsByClassName('c1')[0]);
+            });
+            it('should return three elements', function() {
+                expect(getElementsByClassName('c3').length).to.be.equal(3);
+                expect(getElementsByClassName('c3')[0]).to.be.equal(document.getElementsByClassName('c3')[0]);
+                expect(getElementsByClassName('c3')[2]).to.be.equal(document.getElementsByClassName('c3')[2]);
+            });
+            it('should return one element', function() {
+                expect(getElementsByClassName('c2 c4').length).to.be.equal(1);
+                expect(getElementsByClassName('c2 c4')[0]).to.be.equal(document.getElementsByClassName('c2 c4')[0]);
+            });
+            it('should return two elements', function() {
+                var context = document.getElementById('context');
+                expect(getElementsByClassName('c4', context).length).to.be.equal(2);
+                expect(getElementsByClassName('c4', context)[0]).to.be.equal(context.getElementsByClassName('c4')[0]);
+                expect(getElementsByClassName('c4', context)[1]).to.be.equal(context.getElementsByClassName('c4')[1]);
+            });
+
+            it('should throw an error', function() {
+                expect(function() {
+                    getElementsByClassName();
+                }).to.throw(Error);
+                expect(function() {
+                    getElementsByClassName('c1', window);
+                }).to.throw(Error);
+            });
+        });
+
+        mocha.run();
+    </script>
+</body>
+</html>
