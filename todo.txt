@@ -1,0 +1,7 @@
+- reverse a string recursively
+
+- find all permutations of a string
+
+- find it a string A contains any of permutations of a string B
+
+- 
