@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Binary conversion tests</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.1.2/mocha.min.css">
+</head>
+<body>
+
+    <div id="mocha"></div>
+    <div id="messages"></div>
+    <div id="fixtures"></div>
+    
+    <script src="https://cdn.rawgit.com/jquery/jquery/2.1.4/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/3.5.0/chai.js"></script>
+    <script src="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.js"></script>
+
+    <script src="./convert.js"></script>
+
+    <script>
+        mocha.setup('bdd');
+
+        var expect = chai.expect;
+
+        describe('convert', function() {
+            it('should return correct result', function() {
+                expect(convert(0)).to.be.equal('0');
+            });
+            it('should return correct result', function() {
+                expect(convert(1)).to.be.equal('1');
+            });
+            it('should return correct result', function() {
+                expect(convert(4)).to.be.equal('100');
+            });
+            it('should return correct result', function() {
+                expect(convert(15)).to.be.equal('1111');
+            });
+
+            it('should throw an error', function() {
+                expect(function() {
+                    convert();
+                }).to.throw(Error);
+                expect(function() {
+                    convert('4');
+                }).to.throw(Error);
+            });
+        });
+
+        mocha.run();
+    </script>
+</body>
+</html>
