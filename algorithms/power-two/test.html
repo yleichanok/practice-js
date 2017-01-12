@@ -49,6 +49,33 @@
             });
         });
 
+        describe('check2', function() {
+            it('should return correct result', function() {
+                expect(check2(1)).to.be.equal(true);
+            });
+            it('should return correct result', function() {
+                expect(check2(2)).to.be.equal(true);
+            });
+            it('should return correct result', function() {
+                expect(check2(0)).to.be.equal(false);
+            });
+            it('should return correct result', function() {
+                expect(check2(64)).to.be.equal(true);
+            });
+            it('should return correct result', function() {
+                expect(check2(-1)).to.be.equal(false);
+            });
+
+            it('should throw an error', function() {
+                expect(function() {
+                    check2();
+                }).to.throw(Error);
+                expect(function() {
+                    check2('');
+                }).to.throw(Error);
+            });
+        });
+
         mocha.run();
     </script>
 </body>
