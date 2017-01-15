@@ -4,4 +4,6 @@
 
 - find it a string A contains any of permutations of a string B
 
-- 
+- convert roman numbers
+
+- rotate a matrix
