@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Multiply tests</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.1.2/mocha.min.css">
+</head>
+<body>
+
+    <div id="mocha"></div>
+    <div id="messages"></div>
+    <div id="fixtures"></div>
+    
+    <script src="https://cdn.rawgit.com/jquery/jquery/2.1.4/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/3.5.0/chai.js"></script>
+    <script src="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.js"></script>
+
+    <script src="../add/add.js"></script>
+    <script src="./multiply.js"></script>
+
+    <script>
+        mocha.setup('bdd');
+
+        var expect = chai.expect;
+
+        describe('multiply', function() {
+            it('should produce correct result', function() {
+                expect(multiply('1', '3')).to.be.equal('3');
+            });
+            it('should produce correct result', function() {
+                expect(multiply('12', '0')).to.be.equal('0');
+            });
+            it('should produce correct result', function() {
+                expect(multiply('2', '235')).to.be.equal('470');
+            });
+            it('should produce correct result', function() {
+                expect(multiply('128', '128')).to.be.equal('16384');
+            });
+            it('should produce correct result', function() {
+                expect(multiply('73648193729', '8364618193746282')).to.be.equal('616039021202144233009500000');
+            });
+
+            it('should throw an error', function() {
+                expect(function() {
+                    multiply();
+                }).to.throw(Error);
+                expect(function() {
+                    multiply('', 0);
+                }).to.throw(Error);
+                expect(function() {
+                    multiply('1.2', 'x');
+                }).to.throw(Error);
+            });
+        });
+
+        mocha.run();
+    </script>
+</body>
+</html>

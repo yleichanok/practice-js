@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add tests</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.1.2/mocha.min.css">
+</head>
+<body>
+
+    <div id="mocha"></div>
+    <div id="messages"></div>
+    <div id="fixtures"></div>
+    
+    <script src="https://cdn.rawgit.com/jquery/jquery/2.1.4/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/3.5.0/chai.js"></script>
+    <script src="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.js"></script>
+
+    <script src="./add.js"></script>
+
+    <script>
+        mocha.setup('bdd');
+
+        var expect = chai.expect;
+
+        describe('add', function() {
+            it('should produce correct result', function() {
+                expect(add('1', '3')).to.be.equal('4');
+            });
+            it('should produce correct result', function() {
+                expect(add('12', '0')).to.be.equal('12');
+            });
+            it('should produce correct result', function() {
+                expect(add('2', '235')).to.be.equal('237');
+            });
+            it('should produce correct result', function() {
+                expect(add('128', '128')).to.be.equal('256');
+            });
+            it('should produce correct result', function() {
+                expect(add('73648193729', '8364618193746282')).to.be.equal('8364691841940011');
+            });
+
+            it('should throw an error', function() {
+                expect(function() {
+                    add();
+                }).to.throw(Error);
+                expect(function() {
+                    add('', 0);
+                }).to.throw(Error);
+                expect(function() {
+                    add('1.2', 'x');
+                }).to.throw(Error);
+            });
+        });
+
+        mocha.run();
+    </script>
+</body>
+</html>
