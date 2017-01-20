@@ -64,6 +64,27 @@
             });
         });
 
+        describe('reverse3', function() {
+            it('should return an empty string', function() {
+                expect(reverse3('')).to.be.equal('');
+            });
+            it('should reverse a string', function() {
+                expect(reverse3('a')).to.be.equal('a');
+            });
+            it('should reverse a string', function() {
+                expect(reverse3('abc')).to.be.equal('cba');
+            });
+            it('should reverse a string', function() {
+                expect(reverse3('abcdef')).to.be.equal('fedcba');
+            });
+            
+            it('should throw an Error', function() {
+                expect(function() {
+                    reverse3();
+                }).to.throw(Error);
+            });
+        });
+
         mocha.run();
     </script>
 </body>

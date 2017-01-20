@@ -37,3 +37,18 @@ function reverse2(text) {
 
     return text.split('').reverse().join('');
 }
+
+/**
+ * Recursive implementation.
+ * @param  {String} text Input string
+ * @return {Strung}
+ */
+function reverse3(text) {
+
+    if (typeof text !== 'string') {
+        throw new Error('Text is missing.');
+    }
+
+    var lastIndex = text.length - 1;
+    return (text ? text[lastIndex] + reverse3(text.substring(0, lastIndex)) : '');
+}
